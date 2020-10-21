@@ -164,7 +164,7 @@ const gridValues = (grid) => {
 /**
  * Pointing Pairs with Constraint Propagation
  *
- * Looking at each unsolved unit in turn there may be two or three occurrences
+ * Looking at each unsolved unit in turn there may be two occurrences
  * of a particular digit. If these digits are aligned on a single row or column,
  * we can remove any digit occurs anywhere else on the row or column outside the unit
  *
@@ -212,7 +212,6 @@ export const findPointPair = (values, square, digit) => {
 			}
 		} else if (hasPairValues(unitCols, values, digit)) {
 			// aligned on a single column
-
 			if (
 				canEliminate(colPeers, values, digit) &&
 				all(colPeers, (sq) => eliminate(values, sq, digit))
@@ -265,7 +264,7 @@ export const findPointPair = (values, square, digit) => {
  */
 const solveBoard = async (values) => {
 	let loopCounter = 0;
-	const loopLimit = 5; // Limit number based on my tests.
+	const loopLimit = 5;
 	let isAborted,
 		stopLoop = false;
 
@@ -281,7 +280,7 @@ const solveBoard = async (values) => {
 		solutionSteps: [],
 	};
 
-	if (solved || completed) return solveBoardResult;
+	if (completed) return solveBoardResult;
 
 	let analysisBoard = values;
 
@@ -292,15 +291,18 @@ const solveBoard = async (values) => {
 		// Loop until the board is solved or completed or aborted.
 		// This in case the board will be returned with a non valid state.
 		while (!solved && !completed && !stopLoop) {
-			// Add new solving strategies here
+			// Start solving strategies
 			analysisBoard = await searchPointPair(analysisBoard);
+			// Add new solvers here, i.e:
+			// analysisBoard = await searchHiddenPairsTriples(analysisBoard);
+			// analysisBoard = await searchNakedHiddenQuads(analysisBoard);
+			// analysisBoard = await searchBoxLineReduction(analysisBoard);
+			// End solving strategies
 
 			solved = isSolved(analysisBoard);
 			completed = isCompleted(analysisBoard);
 
 			loopCounter++;
-			console.log('isSolved => ', solved);
-			console.log(loopCounter);
 
 			if (!solved && loopCounter >= loopLimit) {
 				// if board is still unsolved, use backtrack search
