@@ -9,12 +9,11 @@ The latest js version that port Peter code was from 2014 (thanks to @einaregilss
 
 ## General idea:
 
-Initially was just create a react app that used Peter Norvig's approach to solve any sudoku puzzle while collecting all steps to learn. But, Peter Norvig used a backtracking search strategy, and what it does is systematically try all possibilities until it hit one that works. That create many temp steps that are not valid as it test for all possibles solutions.
+Initially was just create a react app that used Peter Norvig's approach to solve any sudoku puzzle while collecting all steps to learn. But, Peter Norvig used a backtracking search strategy, and what it does is systematically try all possibilities until it hit one that works. In the search of a solution, it create many temp steps that are not valid, making the learning part pointless.
 
-Then I did my research about other sudoku solver strategies, there are more than 38 options! I was hook. See here [https://www.sudokuwiki.org/sudoku.htm](https://www.sudokuwiki.org/sudoku.htm).
+Then I did my research about others sudoku solver strategies, ad there are more than 38 options! I was hook. See here [https://www.sudokuwiki.org/sudoku.htm](https://www.sudokuwiki.org/sudoku.htm).
 
-But it comes with a caveats, you will have to produce many lines of code and may still won't solve all puzzles. (I learned this the hard way). So, here is a mixed approach: Create a react app that used the fundamental strategies and only apply Peter
-Norvig's nuclear solver in case the other strategies fail to resolve it.
+But it comes with a caveats, you can produce many lines of code and still won't solve all puzzles. (I learned this the hard way). So, here is a mixed approach: Create a react app that use human solving strategies (for learning purposes and because it's fun!) and only apply Peter Norvig's nuclear solver in case couldn't find a solution.
 
 ## List of Sudoku solver strategies:
 
