@@ -1,4 +1,4 @@
-## React Sudoku Assignment . Author J.P. Solano
+## React Sudoku Solver. Author J.P. Solano
 
 This is a fresh attempt to port Peter Norvig's @norvig legendary Sudoku Solver from an hyper-efficient python base code
 to JS. See http://norvig.com/sudoku.html for his article and explanations.
@@ -7,7 +7,7 @@ The latest js version that port Peter code was from 2014 (thanks to @einaregilss
 
 ![image](https://github.com/jsolano/react-sudoku-solver/blob/master/src/assets/preview.png)
 
-## The general idea :
+## General idea:
 
 Initially was just create a react app that used Peter Norvig's approach to solve any sudoku puzzle. Then when I did my research about
 sudoku solver strategies, there are more than 38 options! I was hook. See here [https://www.sudokuwiki.org/sudoku.htm](https://www.sudokuwiki.org/sudoku.htm).
@@ -15,7 +15,7 @@ sudoku solver strategies, there are more than 38 options! I was hook. See here [
 But it comes with a caveats, you will have to produce tons of code and may be still don't solve the puzzle. (I learned this in the hard way). So, here is a mixed approach: Create a react app that used the fundamental strategies and only apply Peter
 Norvig's nuclear solver in case the other strategies fail to resolve it.
 
-## List of Sudoku solver strategies :
+## List of Sudoku solver strategies:
 
 more detail here: [https://www.sudokuwiki.org/sudoku.htm](https://www.sudokuwiki.org/sudoku.htm)
 

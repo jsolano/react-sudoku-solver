@@ -108,7 +108,6 @@ export const eliminate = (values, square, digit) => {
 		const digit2 = values[square];
 		const peersKeys = Object.keys(peers[square]);
 		if (all(peersKeys, (square2) => eliminate(values, square2, digit2))) {
-			console.log(STRATEGIES.NAKED_SINGLE, [square], digit2);
 			log(STRATEGIES.NAKED_SINGLE, [square], digit2);
 		} else {
 			return false;
@@ -127,7 +126,6 @@ export const eliminate = (values, square, digit) => {
 		} else if (digitPlaces.length === 1) {
 			// digit can only be in one place in unit; assign it there
 			if (assign(values, digitPlaces[0], digit)) {
-				console.log(STRATEGIES.HIDDEN_SINGLE, [square], digit);
 				log(STRATEGIES.HIDDEN_SINGLE, [square], digit);
 			} else {
 				return false;
