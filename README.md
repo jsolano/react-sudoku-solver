@@ -9,11 +9,11 @@ The latest js version that port Peter code was from 2014 (thanks to @einaregilss
 
 ## General idea:
 
-Initially was just create a react app that used Peter Norvig's approach to solve any sudoku puzzle while collecting all steps to learn. But, Peter Norvig used a backtracking search strategy, and what it does is systematically try all possibilities until it hit one that works. In the search of a solution, it create many temp steps that are not valid, making the learning part pointless.
+Initially was just create a react app that used Peter Norvig's approach to solve any sudoku puzzle while collecting all steps to learn. But, Peter Norvig used a backtracking search strategy, and what it does is systematically try all possibilities until it hit one that works. In the search of a solution, create many temp steps that are not valid, making the learning part pointless.
 
-Then I did my research about others sudoku solver strategies, ad there are more than 38 options! I was hook. See here [https://www.sudokuwiki.org/sudoku.htm](https://www.sudokuwiki.org/sudoku.htm).
+Then I did my research about others sudoku solver strategies, and there are more than 38 options! I was hook. See more here [https://www.sudokuwiki.org/sudoku.htm](https://www.sudokuwiki.org/sudoku.htm).
 
-But it comes with a caveats, you can produce many lines of code and still won't solve all puzzles. (I learned this the hard way). So, here is a mixed approach: Create a react app that use human solving strategies (for learning purposes and because it's fun!) and only apply Peter Norvig's nuclear solver in case couldn't find a solution.
+But it comes with a caveats: you can produce many lines of code implementing some of them and still won't solve all puzzles. (I learned this the hard way). So, here is a mixed approach: Create a react app that use human solving strategies (for learning purposes and because it's fun!) and only apply Peter Norvig's nuclear solver in case couldn't find a solution.
 
 ## List of Sudoku solver strategies:
 
@@ -63,6 +63,10 @@ Last strategy: Backtracking Search **SUPPORTED**
 Feel free to fork this project and open a PR with any improve or new strategy implementation.
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+
+## Next Steps
+
+1. In the modal for Load a new Board, Add a button to select a random puzzle string.
 
 Below you will find some information on how to perform common tasks.<br>
 
