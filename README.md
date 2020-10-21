@@ -5,7 +5,7 @@ to JS. See http://norvig.com/sudoku.html for his article and explanations.
 
 The latest js version that port Peter code was from 2014 (thanks to @einaregilsson/sudoku !)
 
-![image](https://github.com/jsolano/react-sudoku-solver/blob/main/src/assets/preview.png)
+![image](https://github.com/jsolano/react-sudoku-solver/blob/master/src/assets/preview.png)
 
 ## The general idea :
 
