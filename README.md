@@ -12,7 +12,7 @@ The latest js version that port Peter code was from 2014 (thanks to @einaregilss
 Initially was just create a react app that used Peter Norvig's approach solve any sudoku puzzle. Then when I did my research about
 sudoku solver strategies, there are more than 38 options! I was hook. (See here https://www.sudokuwiki.org/sudoku.htm).
 
-But it comes with a caveats, you will have to produce tons of code and may be still don't solve the puzzle. (I learned this in the hard way) So, here is approach: Create a react app that used the fundamental strategies and only apply Peter
+But it comes with a caveats, you will have to produce tons of code and may be still don't solve the puzzle. (I learned this in the hard way) So, here is a mixed approach: Create a react app that used the fundamental strategies and only apply Peter
 Norvig's nuclear solver in case the other strategies fail to resolve it.
 
 ## List of Sudoku solver strategies :
