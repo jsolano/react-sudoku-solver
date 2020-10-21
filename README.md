@@ -59,7 +59,9 @@ more detail here: [https://www.sudokuwiki.org/sudoku.htm](https://www.sudokuwiki
 37. Quad Forcing Chains
 38. Bowman's Bingo
 
-Feel free to folk this project and open a PR with any improve or new strategy implementation.
+Last strategy: Backtracking Search **SUPPORTED**
+
+Feel free to fork this project and open a PR with any improve or new strategy implementation.
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
