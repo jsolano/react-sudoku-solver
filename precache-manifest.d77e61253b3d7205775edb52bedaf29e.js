@@ -24,7 +24,7 @@ self.__precacheManifest = [
     "url": "/react-sudoku-solver/static/media/jp.900a0989.png"
   },
   {
-    "revision": "9b25be1882eaf7c5b7be7acff1fc5137",
+    "revision": "b670b738f5a9e77297b2bc0624414f04",
     "url": "/react-sudoku-solver/index.html"
   }
 ];
