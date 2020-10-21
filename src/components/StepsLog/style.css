@@ -1,0 +1,21 @@
+.steps-log {
+	border: 2px solid #344861;
+	height: 10%;
+	width: 69%;
+	height: 37%;
+	display: inline-block;
+	overflow: auto;
+}
+
+.steps-log .title {
+	margin-top: 3px;
+	font-size: 18px;
+}
+
+.steps-log .intro {
+	text-align: left;
+	font-size: 13px;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-bottom: 3px;
+}

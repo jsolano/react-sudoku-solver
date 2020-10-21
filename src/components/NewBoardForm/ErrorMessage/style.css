@@ -1,0 +1,5 @@
+.new-board .errors {
+	display: inline-block;
+	min-width: 70%;
+	max-width: 70%;
+}

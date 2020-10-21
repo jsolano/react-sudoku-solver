@@ -1,0 +1,34 @@
+.btn {
+	display: inline-block;
+	position: relative;
+	margin-bottom: 20px;
+	padding: 15px 24px 17px;
+	box-sizing: border-box;
+	background: #264653;
+	font-family: SourceSansPro, 'Helvetica Neue', Helvetica, Arial,
+		'Lucida Grande', sans-serif;
+	color: #fff;
+	font-size: 19px;
+	font-size: 1.0556rem;
+	line-height: 19px;
+	font-weight: 700;
+	text-align: center;
+	text-decoration: none;
+	letter-spacing: 0.25px;
+	cursor: pointer;
+	border: 1px solid #009845;
+	border-radius: 0;
+	transition: background 0.2s ease-in-out, color 0.2s ease-in-out,
+		border 0.2s ease-in-out;
+}
+
+.btn-small {
+	font-size: 12px;
+	font-size: 1.0556rem;
+	font-weight: 400;
+	padding: 10px 10px 10px;
+}
+
+.btn.btn-close {
+	background: #34507e;
+}

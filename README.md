@@ -1,0 +1,114 @@
+## React Sudoku Assignment . Author J.P. Solano
+
+This is a fresh attempt to port Peter Norvig's (@norvig) legendary Sudoku Solver from an hyper-efficient python base code
+to JS. See http://norvig.com/sudoku.html for his article and explanations.
+
+The latest js version that port Peter code was from 2014 (thanks to @einaregilsson/sudoku !)
+
+![image](https://github.com/jsolano/react-sudoku-solver/blob/main/src/assets/preview.png)
+
+## The general idea :
+
+Initially was just create a react app that used Peter Norvig's approach solve any sudoku puzzle. Then when I did my research about
+sudoku solver strategies, there are more than 38 options! I was hook. (See here https://www.sudokuwiki.org/sudoku.htm).
+
+But it comes with a caveats, you will have to produce tons of code and may be still don't solve the puzzle. (I learned this in the hard way) So, here is approach: Create a react app that used the fundamental strategies and only apply Peter
+Norvig's nuclear solver in case the other strategies fail to resolve it.
+
+## List of Sudoku solver strategies :
+
+more detail here: https://www.sudokuwiki.org/sudoku.htm
+
+1. Hidden Singles => SUPPORTED
+2. Naked Pairs/Triples => SUPPORTED
+3. Hidden Pairs/Triples
+4. Naked/Hidden Quads
+5. Pointing Pairs => SUPPORTED
+6. Box/Line Reduction
+7. X-Wing
+8. Simple Colouring
+9. Y-Wing
+10. Swordfish
+11. XYZ Wing
+12. X-Cycles (Diabolical Strategies )
+13. BUG
+14. XY-Chain
+15. 3D Medusa
+16. Jellyfish
+17. Unique Rectangles
+18. SK Loops
+19. Extended Unique Rect.
+20. Hidden Unique Rect's
+21. WXYZ Wing
+22. Aligned Pair Exclusion
+23. Exocet (Extreme Strategies )
+24. Grouped X-Cycles
+25. Empty Rectangles
+26. Finned X-Wing
+27. Finned Swordfish
+28. Altern. Inference Chains
+29. Sue-de-Coq
+30. Digit Forcing Chains
+31. Nishio Forcing Chains
+32. Cell Forcing Chains
+33. Unit Forcing Chains
+34. Almost Locked Sets
+35. Death Blossom
+36. Pattern Overlay Method
+37. Quad Forcing Chains
+38. Bowman's Bingo
+
+Feel free to folk this project and open a PR with any improve or new strategy implementation.
+
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+
+Below you will find some information on how to perform common tasks.<br>
+
+## Available Scripts
+
+In the project directory, you can run:
+
+Before anything:
+
+### `npm install | yarn`
+
+After
+
+### `npm|yarn start`
+
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.<br>
+You will also see any lint errors in the console.
+
+### `npm|yarn test`
+
+Launches the test runner in the interactive watch mode.<br>
+See the section about [running tests](#running-tests) for more information.
+
+### `npm|yarn run build`
+
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
+
+See the section about [deployment](#deployment) for more information.
+
+### `npm|yarn run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Supported Browsers
+
+By default, the generated project uses the latest version of React.
+
+You can refer [to the React documentation](https://reactjs.org/docs/react-dom.html#browser-support) for more information about supported browsers.

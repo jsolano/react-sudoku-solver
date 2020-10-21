@@ -1,0 +1,21 @@
+.log-detail-row {
+	border-top: 1px solid black;
+	background: white;
+	padding-bottom: 5px;
+}
+
+.log-detail-row .title {
+	text-align: left;
+	font-size: 13px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font-weight: bold;
+}
+
+.log-detail-row .details {
+	text-align: left;
+	font-size: 13px;
+	padding-top: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
