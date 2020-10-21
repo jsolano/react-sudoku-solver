@@ -9,10 +9,11 @@ The latest js version that port Peter code was from 2014 (thanks to @einaregilss
 
 ## General idea:
 
-Initially was just create a react app that used Peter Norvig's approach to solve any sudoku puzzle. Then when I did my research about
-sudoku solver strategies, there are more than 38 options! I was hook. See here [https://www.sudokuwiki.org/sudoku.htm](https://www.sudokuwiki.org/sudoku.htm).
+Initially was just create a react app that used Peter Norvig's approach to solve any sudoku puzzle while collecting all steps to learn. But, Peter Norvig used a backtracking search strategy, and what it does is systematically try all possibilities until it hit one that works. That create many temp steps that are not valid as it test for all possibles solutions.
 
-But it comes with a caveats, you will have to produce tons of code and may be still don't solve the puzzle. (I learned this in the hard way). So, here is a mixed approach: Create a react app that used the fundamental strategies and only apply Peter
+Then I did my research about other sudoku solver strategies, there are more than 38 options! I was hook. See here [https://www.sudokuwiki.org/sudoku.htm](https://www.sudokuwiki.org/sudoku.htm).
+
+But it comes with a caveats, you will have to produce many lines of code and may still won't solve all puzzles. (I learned this the hard way). So, here is a mixed approach: Create a react app that used the fundamental strategies and only apply Peter
 Norvig's nuclear solver in case the other strategies fail to resolve it.
 
 ## List of Sudoku solver strategies:
@@ -25,12 +26,12 @@ more detail here: [https://www.sudokuwiki.org/sudoku.htm](https://www.sudokuwiki
 4. Hidden Pairs/Triples
 5. Naked/Hidden Quads
 6. Box/Line Reduction
-7. X-Wing
+7. X-Wing (Tough Strategies)
 8. Simple Colouring
 9. Y-Wing
 10. Swordfish
 11. XYZ Wing
-12. X-Cycles (Diabolical Strategies )
+12. X-Cycles (Diabolical Strategies)
 13. BUG
 14. XY-Chain
 15. 3D Medusa
@@ -41,7 +42,7 @@ more detail here: [https://www.sudokuwiki.org/sudoku.htm](https://www.sudokuwiki
 20. Hidden Unique Rect's
 21. WXYZ Wing
 22. Aligned Pair Exclusion
-23. Exocet (Extreme Strategies )
+23. Exocet (Extreme Strategies)
 24. Grouped X-Cycles
 25. Empty Rectangles
 26. Finned X-Wing
