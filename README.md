@@ -7,6 +7,8 @@ The latest js version that port Peter code was from 2014 (thanks to @einaregilss
 
 [LIVE DEMO HERE](http://jsolano.github.io/react-sudoku-solver)
 
+[Article in dev.to](https://dev.to/jsolano/building-a-react-app-to-solve-every-sudoku-puzzle-3c95)
+
 ![image](https://github.com/jsolano/react-sudoku-solver/blob/master/src/assets/preview.png)
 
 ## General idea:
