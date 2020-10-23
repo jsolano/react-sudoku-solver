@@ -1,5 +1,6 @@
 import { addSolutionStepsLog } from './logs';
 import { digits, rows, cols, rRows, cCols, STRATEGIES } from './constants';
+import { puzzles } from '../Solver/tests/data';
 
 // Cross product of elements in A and elements in B.
 export const cross = (A, B) => {
@@ -263,5 +264,6 @@ export const unsolvedSquares = (list, values) =>
 export const canEliminate = (list, values, digit) =>
 	list.filter((square) => values[square].includes(digit)).length > 0;
 
-// test
-// src/services/Sudoku/tests
+export const getRandomPuzzle = () => {
+	return puzzles[Math.floor(Math.random() * puzzles.length)];
+};

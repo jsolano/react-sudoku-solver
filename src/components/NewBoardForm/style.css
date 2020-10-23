@@ -51,3 +51,9 @@ input::placeholder {
 	border: solid 1px #c4cfda;
 	margin-bottom: 12px;
 }
+
+.new-board .pick-one {
+	color: rgb(85, 26, 139);
+	cursor: pointer;
+	text-decoration: underline;
+}

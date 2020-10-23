@@ -13,6 +13,11 @@ const newBoardForm = (props) => {
 	return (
 		<div className="new-board">
 			<h3>Enter a Sudoku string board</h3>
+			<h5>
+				<a className="pick-one" onClick={props.randomPuzzle}>
+					or Just Pick One
+				</a>
+			</h5>
 			<p>Valid strings could contain dots and numbers</p>
 			<input
 				ref={inputRef}

@@ -8,6 +8,7 @@ import {
 	cross,
 	display,
 	all,
+	getRandomPuzzle,
 } from '../../Solver/utils';
 
 import { rows, cols, STRATEGIES } from '../../Solver/constants';
@@ -80,6 +81,13 @@ describe('solver', () => {
 
 	it('peers', () => {
 		expect(peers['C2']).toEqual(C2Peers);
+	});
+
+	it('Solve ALL', () => {
+		// for (const puzzle of puzzles) {
+		// 	console.log(puzzle);
+		// 	console.log(display(search(parseGrid(puzzle), STRATEGIES.BACKTRACKING)));
+		// }
 	});
 
 	// it('searchPointPair', () => {
