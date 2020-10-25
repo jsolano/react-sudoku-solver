@@ -24,6 +24,7 @@ export const STATUS = {
 	COMPLETED: 'completed',
 	UNKNOWN: 'unknown',
 	TIMER: 'timer',
+	SOLVE: 'solve',
 };
 
 export const STRATEGIES = {

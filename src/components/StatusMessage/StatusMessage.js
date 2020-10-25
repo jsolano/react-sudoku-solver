@@ -42,6 +42,17 @@ const statusMessage = (props) => {
 				</h5>
 			</div>
 		);
+	} else if (props.status === STATUS.SOLVE) {
+		message = (
+			<div className={props.classes}>
+				<CheckCircle classes="App-icon solved-board" />
+				<h5 className="App-status-message">This Board is Valid</h5>
+				<h4 className="App-status-abort-message">
+					After parsing the initial board and looking for possible values for
+					every cell, there's not too much to do here.
+				</h4>
+			</div>
+		);
 	} else {
 		message = <div></div>;
 	}

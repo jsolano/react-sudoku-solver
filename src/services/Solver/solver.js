@@ -14,12 +14,13 @@ import {
 	log,
 	hasPairValues,
 	getPairSquares,
-	getOuterPeers,
 	unsolvedSquares,
 	canEliminate,
 	showBoardStatus,
 	isSolved,
 	display,
+	getSquareUnitRowCol,
+	getPeers,
 } from './utils';
 
 import {
@@ -81,7 +82,10 @@ export const assign = (values, square, digit) => {
 	// Eliminate all the other values (except digit) from values[square] and propagate.
 	// Return values, except return false if a contradiction is detected.
 	const otherValues = values[square].replace(digit, '').split('');
-	if (all(otherValues, (otherValue) => eliminate(values, square, otherValue))) {
+	const isAssigned = all(otherValues, (otherValue) =>
+		eliminate(values, square, otherValue)
+	);
+	if (isAssigned) {
 		return values;
 	} else {
 		return false;
@@ -92,7 +96,9 @@ export const eliminate = (values, square, digit) => {
 	//Eliminate digit from values[square]; propagate when values or places <= 2.
 	//return values, except return false if a contradiction is detected.
 
-	if (values[square].indexOf(digit) === -1) {
+	const isDigitPresent = values[square].indexOf(digit) !== -1;
+
+	if (!isDigitPresent) {
 		// already eliminated.
 		return values;
 	}
@@ -101,13 +107,19 @@ export const eliminate = (values, square, digit) => {
 
 	// (1) If a square is reduced to one value digit2, then eliminate digit2
 	// from the peers.
-	if (values[square].length === 0) {
+	const isSquareContradicted = values[square].length === 0;
+	const isSquareSolved = values[square].length === 1;
+	if (isSquareContradicted) {
 		// Contradiction: removed last value
 		return false;
-	} else if (values[square].length === 1) {
+	} else if (isSquareSolved) {
+		// Propagate change
 		const digit2 = values[square];
 		const peersKeys = Object.keys(peers[square]);
-		if (all(peersKeys, (square2) => eliminate(values, square2, digit2))) {
+		const isSafePropagated = all(peersKeys, (square2) =>
+			eliminate(values, square2, digit2)
+		);
+		if (isSafePropagated) {
 			log(STRATEGIES.NAKED_SINGLE, [square], digit2);
 		} else {
 			return false;
@@ -190,32 +202,37 @@ export const searchPointPair = async (values) => {
 };
 
 export const findPointPair = (values, square, digit) => {
-	const unitCol = units[square][0];
-	const unitRow = units[square][1];
-	const unit = units[square][2];
-	const unitRows = unit.filter((sq) => sq.includes(square[0]));
-	const unitCols = unit.filter((sq) => sq.includes(square[1]));
-	const rowPeers = getOuterPeers(unitRow, unitRows, values);
-	const colPeers = getOuterPeers(unitCol, unitCols, values);
-	const unitRowPeers = getOuterPeers(unit, unitRows, values);
-	const unitColPeers = getOuterPeers(unit, unitCols, values);
+	const [unitCol, unitRow, unit] = units[square];
+	const [unitRows, unitCols] = getSquareUnitRowCol(unit, square);
+	const [rowPeers, colPeers, unitRowPeers, unitColPeers] = getPeers(
+		unit,
+		unitRow,
+		unitRows,
+		unitCol,
+		unitCols,
+		values
+	);
 
 	if (hasPairValues(unit, values, digit)) {
 		if (hasPairValues(unitRows, values, digit)) {
 			// aligned on a single row
-			if (
-				canEliminate(rowPeers, values, digit) &&
-				all(rowPeers, (sq) => eliminate(values, sq, digit))
-			) {
+			const areRowPeerValuesEliminated = eliminatePeerValues(
+				rowPeers,
+				values,
+				digit
+			);
+			if (areRowPeerValuesEliminated) {
 				const pairSquaresCol = getPairSquares(unitRows, values, digit);
 				log(STRATEGIES.POINTING_PAIRS, pairSquaresCol, digit);
 			}
 		} else if (hasPairValues(unitCols, values, digit)) {
 			// aligned on a single column
-			if (
-				canEliminate(colPeers, values, digit) &&
-				all(colPeers, (sq) => eliminate(values, sq, digit))
-			) {
+			const areColPeerValuesEliminated = eliminatePeerValues(
+				colPeers,
+				values,
+				digit
+			);
+			if (areColPeerValuesEliminated) {
 				const pairSquaresRow = getPairSquares(unitCols, values, digit);
 				log(STRATEGIES.POINTING_PAIRS, pairSquaresRow, digit);
 			}
@@ -224,10 +241,12 @@ export const findPointPair = (values, square, digit) => {
 		hasPairValues(unitCols, values, digit) &&
 		!canEliminate(colPeers, values, digit)
 	) {
-		if (
-			canEliminate(unitColPeers, values, digit) &&
-			all(unitColPeers, (sq) => eliminate(values, sq, digit))
-		) {
+		const areUnitColPeerValuesEliminated = eliminatePeerValues(
+			unitColPeers,
+			values,
+			digit
+		);
+		if (areUnitColPeerValuesEliminated) {
 			const pairSquaresCol = getPairSquares(unitCols, values, digit);
 			log(STRATEGIES.POINTING_PAIRS, pairSquaresCol, digit);
 		}
@@ -235,10 +254,12 @@ export const findPointPair = (values, square, digit) => {
 		hasPairValues(unitRows, values, digit) &&
 		!canEliminate(rowPeers, values, digit)
 	) {
-		if (
-			canEliminate(unitRowPeers, values, digit) &&
-			all(unitRowPeers, (sq) => eliminate(values, sq, digit))
-		) {
+		const areUnitRowPeerValuesEliminated = eliminatePeerValues(
+			unitRowPeers,
+			values,
+			digit
+		);
+		if (areUnitRowPeerValuesEliminated) {
 			const pairSquaresRow = getPairSquares(unitRows, values, digit);
 			log(STRATEGIES.POINTING_PAIRS, pairSquaresRow, digit);
 		}
@@ -246,6 +267,10 @@ export const findPointPair = (values, square, digit) => {
 
 	return values;
 };
+
+export const eliminatePeerValues = (peers, values, digit) =>
+	canEliminate(peers, values, digit) &&
+	all(peers, (sq) => eliminate(values, sq, digit));
 
 /**************************** End Pointing Pairs  ***********************************/
 

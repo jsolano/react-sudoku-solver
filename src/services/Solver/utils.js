@@ -267,3 +267,22 @@ export const canEliminate = (list, values, digit) =>
 export const getRandomPuzzle = () => {
 	return puzzles[Math.floor(Math.random() * puzzles.length)];
 };
+
+export const getSquareUnitRowCol = (unit, square) => [
+	unit.filter((sq) => sq.includes(square[0])),
+	unit.filter((sq) => sq.includes(square[1])),
+];
+
+export const getPeers = (
+	unit,
+	unitRow,
+	unitRows,
+	unitCol,
+	unitCols,
+	values
+) => [
+	getOuterPeers(unitRow, unitRows, values),
+	getOuterPeers(unitCol, unitCols, values),
+	getOuterPeers(unit, unitRows, values),
+	getOuterPeers(unit, unitCols, values),
+];

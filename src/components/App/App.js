@@ -18,7 +18,11 @@ import {
 
 import SolveBoard, { parseGrid } from '../../services/Solver/solver';
 import { resetLog } from '../../services/Solver/logs';
-import { getBoardState, getRandomPuzzle } from '../../services/Solver/utils';
+import {
+	getBoardState,
+	getRandomPuzzle,
+	isSolved,
+} from '../../services/Solver/utils';
 
 import './style.css';
 
@@ -53,6 +57,10 @@ const app = (props) => {
 	const [solutionStepsState, setSolutionStepsState] = useState();
 
 	const [statusSolveBoardState, setStatusSolveState] = useState({
+		status: STATUS.UNKNOWN,
+	});
+
+	const [statusInitialBoardState, setStatusInitialBoardState] = useState({
 		status: STATUS.UNKNOWN,
 	});
 
@@ -98,6 +106,7 @@ const app = (props) => {
 		setSolveBoardState(getBoardState(emptyBoard, ' Empty '));
 
 		setStatusSolveState({ status: STATUS.UNKNOWN });
+		setStatusInitialBoardState({ status: STATUS.UNKNOWN });
 		setAbortSolveBoardState({ status: STATUS.UNKNOWN });
 		setTimerSolveState({ status: STATUS.UNKNOWN, timeElapsed: 0 });
 		setNewBoardModalErrorState('');
@@ -122,6 +131,7 @@ const app = (props) => {
 		// Cleanup
 		setAbortSolveBoardState({ status: STATUS.UNKNOWN });
 		setStatusSolveState({ status: STATUS.UNKNOWN });
+		setStatusInitialBoardState({ status: STATUS.UNKNOWN });
 		setTimerSolveState({ status: STATUS.UNKNOWN, timeElapsed: 0 });
 		setNewBoardModalErrorState('');
 	};
@@ -132,15 +142,18 @@ const app = (props) => {
 			setNewBoardState({ enterNewBoard: false });
 			setAbortSolveBoardState({ status: STATUS.UNKNOWN });
 			setStatusSolveState({ status: STATUS.UNKNOWN });
+			setStatusInitialBoardState({ status: STATUS.UNKNOWN });
 			setTimerSolveState({ status: STATUS.UNKNOWN, timeElapsed: 0 });
 			setSolutionStepsState(resetLog('solutionSteps'));
 			setSolveBoardState(getBoardState(emptyBoard, ' Empty '));
 
 			// Change Initial board
-			setInitialParsedBoardState(parseGrid(newBoardStringState));
-			setInitialBoardState(
-				getBoardState(parseGrid(newBoardStringState), ' New Board ')
-			);
+			const newBoardValues = parseGrid(newBoardStringState);
+			if (isSolved(newBoardValues)) {
+				setStatusInitialBoardState({ status: STATUS.SOLVE });
+			}
+			setInitialParsedBoardState(newBoardValues);
+			setInitialBoardState(getBoardState(newBoardValues, ' New Board '));
 
 			setCurrentBoardStringState(newBoardStringState);
 			setNewBoardStringState('');
@@ -163,13 +176,18 @@ const app = (props) => {
 		setNewBoardState({ enterNewBoard: false });
 		setAbortSolveBoardState({ status: STATUS.UNKNOWN });
 		setStatusSolveState({ status: STATUS.UNKNOWN });
+		setStatusInitialBoardState({ status: STATUS.UNKNOWN });
 		setTimerSolveState({ status: STATUS.UNKNOWN, timeElapsed: 0 });
 		setSolutionStepsState(resetLog('solutionSteps'));
 		setSolveBoardState(getBoardState(emptyBoard, ' Empty '));
 
 		// Change Initial board
-		setInitialParsedBoardState(parseGrid(randomPuzzle));
-		setInitialBoardState(getBoardState(parseGrid(randomPuzzle), ' New Board '));
+		const newBoardValues = parseGrid(randomPuzzle);
+		if (isSolved(newBoardValues)) {
+			setStatusInitialBoardState({ status: STATUS.SOLVE });
+		}
+		setInitialParsedBoardState(newBoardValues);
+		setInitialBoardState(getBoardState(newBoardValues, ' New Board '));
 
 		setCurrentBoardStringState(randomPuzzle);
 		setNewBoardStringState('');
@@ -184,6 +202,7 @@ const app = (props) => {
 				: { status: STATUS.TIMER, timeElapsed: result.timer.toFixed(2) };
 
 			setStatusSolveState({ status: result.status });
+			setStatusInitialBoardState({ status: STATUS.UNKNOWN });
 			setAbortSolveBoardState({
 				status: result.abort ? STATUS.ABORT : STATUS.UNKNOWN,
 			});
@@ -245,6 +264,10 @@ const app = (props) => {
 							label="Use Default Board"
 						/>
 					</div>
+					<StatusMessage
+						classes="App-message-row"
+						status={statusInitialBoardState.status}
+					/>
 				</div>
 
 				<div className="App-game-panel">
