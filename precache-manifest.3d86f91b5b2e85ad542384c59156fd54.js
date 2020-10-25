@@ -1,15 +1,15 @@
 self.__precacheManifest = [
   {
-    "revision": "3cc2790b1b5d02c3c55d",
-    "url": "/react-sudoku-solver/static/css/main.c1a5cbeb.chunk.css"
+    "revision": "5a1da9bf06110ddf4590",
+    "url": "/react-sudoku-solver/static/css/main.85dd4943.chunk.css"
   },
   {
-    "revision": "3cc2790b1b5d02c3c55d",
-    "url": "/react-sudoku-solver/static/js/main.3cc2790b.chunk.js"
+    "revision": "5a1da9bf06110ddf4590",
+    "url": "/react-sudoku-solver/static/js/main.5a1da9bf.chunk.js"
   },
   {
-    "revision": "da47719a81db4fd694ab",
-    "url": "/react-sudoku-solver/static/js/1.da47719a.chunk.js"
+    "revision": "9ee616f6cee2fda74bcb",
+    "url": "/react-sudoku-solver/static/js/1.9ee616f6.chunk.js"
   },
   {
     "revision": "10f464cc883d2d6afef8",
@@ -24,7 +24,7 @@ self.__precacheManifest = [
     "url": "/react-sudoku-solver/static/media/jp.900a0989.png"
   },
   {
-    "revision": "2493f9619c0af53716d6d6c04548d22d",
+    "revision": "a0f42e940570cbc5e84db4b01adb353e",
     "url": "/react-sudoku-solver/index.html"
   }
 ];
