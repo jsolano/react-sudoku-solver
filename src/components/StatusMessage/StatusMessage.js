@@ -3,6 +3,7 @@ import './style.css';
 import CheckCircle from '../Icons/CheckCircle/CheckCircle';
 import XCircle from '../Icons/XCircle/XCircle';
 import AlertTriangle from '../Icons/AlertTriangle/AlertTriangle';
+import Info from '../Icons/Info/Info';
 import StopWatch from '../Icons/Stopwatch/Stopwatch';
 import { STATUS } from '../../services/Solver/constants';
 
@@ -44,13 +45,19 @@ const statusMessage = (props) => {
 		);
 	} else if (props.status === STATUS.SOLVE) {
 		message = (
-			<div className={props.classes}>
-				<CheckCircle classes="App-icon solved-board" />
-				<h5 className="App-status-message">This Board is Valid</h5>
-				<h4 className="App-status-abort-message">
-					After parsing the initial board and looking for possible values for
-					every cell, there's not too much to do here.
-				</h4>
+			<div>
+				<div className={props.classes}>
+					<CheckCircle classes="App-icon solved-board" />
+					<h5 className="App-status-message">This Board is Valid</h5>
+				</div>
+				<div className={props.classes}>
+					<Info classes="App-icon info" />
+					<h4 className="App-status-abort-message">
+						After parsing the initial board and looking for possible values for
+						every cell, the puzzle is solved. So, there's not too much to do
+						here.
+					</h4>
+				</div>
 			</div>
 		);
 	} else {
