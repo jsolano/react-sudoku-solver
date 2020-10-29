@@ -68,12 +68,29 @@
 	padding-right: 50px;
 }
 
+@media (max-width: 800px) {
+	.App-title {
+		font-size: 1.1em;
+	}
+}
+
 .App-body {
 	background-color: #f3f5f8;
 	font-size: large;
 	padding-left: 16px;
 	display: flex;
 	height: 100vh;
+}
+
+.App-container {
+	display: flex;
+	flex-direction: row;
+}
+
+@media (max-width: 800px) {
+	.App-container {
+		flex-direction: column;
+	}
 }
 
 .App-game-panel {
@@ -87,6 +104,12 @@
 	background-color: #ffffff;
 	border: 1px solid #eee;
 	box-shadow: 0 2px 2px #ccc;
+}
+
+@media (max-width: 800px) {
+	.App-game-panel {
+		width: 98%;
+	}
 }
 
 .App-game-panel .buttons-row {

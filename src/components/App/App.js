@@ -244,7 +244,7 @@ const app = (props) => {
 				<img src={me} className="App-author-image" alt="logo" />
 			</header>
 
-			<div className="App-body">
+			<div className="App-body App-container">
 				<div className="App-game-panel">
 					<Circle classes="circle center-me" label="1" />
 					<Button
