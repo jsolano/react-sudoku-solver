@@ -1,15 +1,15 @@
 {
-  "main.css": "/react-sudoku-solver/static/css/main.85dd4943.chunk.css",
-  "main.js": "/react-sudoku-solver/static/js/main.5a1da9bf.chunk.js",
-  "main.js.map": "/react-sudoku-solver/static/js/main.5a1da9bf.chunk.js.map",
+  "main.css": "/react-sudoku-solver/static/css/main.baa8f46f.chunk.css",
+  "main.js": "/react-sudoku-solver/static/js/main.a4554921.chunk.js",
+  "main.js.map": "/react-sudoku-solver/static/js/main.a4554921.chunk.js.map",
   "static/js/1.9ee616f6.chunk.js": "/react-sudoku-solver/static/js/1.9ee616f6.chunk.js",
   "static/js/1.9ee616f6.chunk.js.map": "/react-sudoku-solver/static/js/1.9ee616f6.chunk.js.map",
   "runtime~main.js": "/react-sudoku-solver/static/js/runtime~main.10f464cc.js",
   "runtime~main.js.map": "/react-sudoku-solver/static/js/runtime~main.10f464cc.js.map",
   "static/media/nextstack-logo.png": "/react-sudoku-solver/static/media/nextstack-logo.b093b40d.png",
   "static/media/jp.png": "/react-sudoku-solver/static/media/jp.900a0989.png",
-  "static/css/main.85dd4943.chunk.css.map": "/react-sudoku-solver/static/css/main.85dd4943.chunk.css.map",
+  "static/css/main.baa8f46f.chunk.css.map": "/react-sudoku-solver/static/css/main.baa8f46f.chunk.css.map",
   "index.html": "/react-sudoku-solver/index.html",
-  "precache-manifest.3d86f91b5b2e85ad542384c59156fd54.js": "/react-sudoku-solver/precache-manifest.3d86f91b5b2e85ad542384c59156fd54.js",
+  "precache-manifest.c0ddcc09c3739fed4737c5b5900cdf5f.js": "/react-sudoku-solver/precache-manifest.c0ddcc09c3739fed4737c5b5900cdf5f.js",
   "service-worker.js": "/react-sudoku-solver/service-worker.js"
 }
