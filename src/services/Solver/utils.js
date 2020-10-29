@@ -3,14 +3,22 @@ import { digits, rows, cols, rRows, cCols, STRATEGIES } from './constants';
 import { puzzles } from '../Solver/tests/data';
 
 // Cross product of elements in A and elements in B.
-export const cross = (A, B) => {
-	const C = [];
-	for (const a of A) for (const b of B) C.push(a + b);
-	return C;
+export const cross = (listA, listB) => {
+	const crossProduct = [];
+	for (const a of listA) {
+		for (const b of listB) {
+			crossProduct.push(a + b);
+		}
+	}
+	return crossProduct;
 };
 
 export const member = (item, list) => {
-	for (const elem of list) if (item === elem) return true;
+	for (const elem of list) {
+		if (item === elem) {
+			return true;
+		}
+	}
 	return false;
 };
 
@@ -22,8 +30,11 @@ export const squares = Squares();
 
 export const SectionList = () => {
 	const sectionList = [];
-	for (const rs of rRows)
-		for (const cs of cCols) sectionList.push(cross(rs, cs));
+	for (const rs of rRows) {
+		for (const cs of cCols) {
+			sectionList.push(cross(rs, cs));
+		}
+	}
 	return sectionList;
 };
 
@@ -148,17 +159,17 @@ export const center = (s, w) => {
 export const display = (values) => {
 	// Used for debugging
 	let width = 0;
-	for (var s in squares) {
+	for (const s in squares) {
 		if (values[squares[s]].length > width) width = values[squares[s]].length;
 	}
 
 	width += 1;
 	let seg = '';
-	for (var i = 0; i < width; i++) seg += '---';
+	for (let i = 0; i < width; i++) seg += '---';
 	const line = '\n' + [seg, seg, seg].join('+');
 	let board = '';
-	for (var r in rows) {
-		for (var c in cols) {
+	for (const r in rows) {
+		for (const c in cols) {
 			board += center(values[rows[r] + cols[c]], width);
 			if (c == 2 || c == 5) board += '|';
 		}

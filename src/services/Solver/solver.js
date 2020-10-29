@@ -105,22 +105,23 @@ export const eliminate = (values, square, digit) => {
 
 	values[square] = values[square].replace(digit, '');
 
-	// (1) If a square is reduced to one value digit2, then eliminate digit2
+	// (1) If a square is reduced to oneValue, then eliminate oneValue
 	// from the peers.
-	const isSquareContradicted = values[square].length === 0;
-	const isSquareSolved = values[square].length === 1;
+	const possibleValues = values[square];
+	const isSquareContradicted = possibleValues.length === 0;
+	const isSquareSolved = possibleValues.length === 1;
 	if (isSquareContradicted) {
 		// Contradiction: removed last value
 		return false;
 	} else if (isSquareSolved) {
 		// Propagate change
-		const digit2 = values[square];
-		const peersKeys = Object.keys(peers[square]);
-		const isSafePropagated = all(peersKeys, (square2) =>
-			eliminate(values, square2, digit2)
+		const oneValue = possibleValues;
+		const peersSquares = Object.keys(peers[square]);
+		const isSafePropagated = all(peersSquares, (peerSquare) =>
+			eliminate(values, peerSquare, oneValue)
 		);
 		if (isSafePropagated) {
-			log(STRATEGIES.NAKED_SINGLE, [square], digit2);
+			log(STRATEGIES.NAKED_SINGLE, [square], oneValue);
 		} else {
 			return false;
 		}
@@ -129,13 +130,15 @@ export const eliminate = (values, square, digit) => {
 	//  (2) If a unit is reduced to only one place for a value digit, then put it there.
 	for (const unit of units[square]) {
 		const digitPlaces = unit.filter(
-			(square2) => values[square2].indexOf(digit) !== -1
+			(square) => values[square].indexOf(digit) !== -1
 		);
+		const areAnyPlaces = digitPlaces.length > 0;
+		const isOnlyOnePlace = digitPlaces.length === 1;
 
-		if (digitPlaces.length === 0) {
+		if (!areAnyPlaces) {
 			// Contradiction: no place for this value
 			return false;
-		} else if (digitPlaces.length === 1) {
+		} else if (isOnlyOnePlace) {
 			// digit can only be in one place in unit; assign it there
 			if (assign(values, digitPlaces[0], digit)) {
 				log(STRATEGIES.HIDDEN_SINGLE, [square], digit);
@@ -156,9 +159,12 @@ export const parseGrid = (grid) => {
 	const input = gridValues(grid);
 
 	for (const square in input) {
-		const digit = input[square];
-		if (digits.indexOf(digit) !== -1 && !assign(values, square, digit)) {
-			return false; // (Fail if we can't assign digit to square.)
+		const value = input[square];
+		// square value could be '.' or 1..9
+		const isAssignableValue =
+			digits.indexOf(value) === -1 || assign(values, square, value);
+		if (!isAssignableValue) {
+			return false; // (Fail if we can't assign value to square.)
 		}
 	}
 
