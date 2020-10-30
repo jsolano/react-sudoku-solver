@@ -12,7 +12,7 @@ import StatusMessage from '../StatusMessage/StatusMessage';
 import {
 	STATUS,
 	initialSudokuString,
-	acceptedStringRegExp,
+	validStringRegExp,
 	emptySudokuString,
 } from '../../services/Solver/constants';
 
@@ -87,7 +87,7 @@ const app = (props) => {
 			return false;
 		}
 
-		if (!acceptedStringRegExp.test(entryString)) {
+		if (!validStringRegExp.test(entryString)) {
 			setNewBoardModalErrorState('invalid-value');
 			return false;
 		}
@@ -100,16 +100,19 @@ const app = (props) => {
 		return true;
 	};
 
-	const onUseDefaultBoardHandler = () => {
-		// Cleanup
+	const cleanUp = () => {
 		setSolutionStepsState(resetLog('solutionSteps'));
 		setSolveBoardState(getBoardState(emptyBoard, ' Empty '));
-
+		setNewBoardState({ enterNewBoard: false });
+		setAbortSolveBoardState({ status: STATUS.UNKNOWN });
 		setStatusSolveState({ status: STATUS.UNKNOWN });
 		setStatusInitialBoardState({ status: STATUS.UNKNOWN });
-		setAbortSolveBoardState({ status: STATUS.UNKNOWN });
 		setTimerSolveState({ status: STATUS.UNKNOWN, timeElapsed: 0 });
 		setNewBoardModalErrorState('');
+	};
+
+	const onUseDefaultBoardHandler = () => {
+		cleanUp();
 
 		//Initial UI Board
 		setInitialParsedBoardState(parseGrid(initialSudokuString));
@@ -118,34 +121,18 @@ const app = (props) => {
 	};
 
 	const onClearGameHandler = () => {
-		//Initialization
-		setSolutionStepsState(resetLog('solutionSteps'));
-		setSolveBoardState(getBoardState(emptyBoard, ' Empty '));
+		cleanUp();
 
 		setInitialParsedBoardState(parseGrid(currentBoardStringState));
 		setInitialBoardState(
 			getBoardState(parseGrid(currentBoardStringState)),
 			' Default '
 		);
-
-		// Cleanup
-		setAbortSolveBoardState({ status: STATUS.UNKNOWN });
-		setStatusSolveState({ status: STATUS.UNKNOWN });
-		setStatusInitialBoardState({ status: STATUS.UNKNOWN });
-		setTimerSolveState({ status: STATUS.UNKNOWN, timeElapsed: 0 });
-		setNewBoardModalErrorState('');
 	};
 
 	const changeInitialBoardHandler = () => {
 		if (isStringBoardValid(newBoardStringState)) {
-			setNewBoardModalErrorState('');
-			setNewBoardState({ enterNewBoard: false });
-			setAbortSolveBoardState({ status: STATUS.UNKNOWN });
-			setStatusSolveState({ status: STATUS.UNKNOWN });
-			setStatusInitialBoardState({ status: STATUS.UNKNOWN });
-			setTimerSolveState({ status: STATUS.UNKNOWN, timeElapsed: 0 });
-			setSolutionStepsState(resetLog('solutionSteps'));
-			setSolveBoardState(getBoardState(emptyBoard, ' Empty '));
+			cleanUp();
 
 			// Change Initial board
 			const newBoardValues = parseGrid(newBoardStringState);
@@ -172,14 +159,7 @@ const app = (props) => {
 	const randomPuzzleHandler = () => {
 		const randomPuzzle = getRandomPuzzle();
 
-		setNewBoardModalErrorState('');
-		setNewBoardState({ enterNewBoard: false });
-		setAbortSolveBoardState({ status: STATUS.UNKNOWN });
-		setStatusSolveState({ status: STATUS.UNKNOWN });
-		setStatusInitialBoardState({ status: STATUS.UNKNOWN });
-		setTimerSolveState({ status: STATUS.UNKNOWN, timeElapsed: 0 });
-		setSolutionStepsState(resetLog('solutionSteps'));
-		setSolveBoardState(getBoardState(emptyBoard, ' Empty '));
+		cleanUp();
 
 		// Change Initial board
 		const newBoardValues = parseGrid(randomPuzzle);
@@ -196,7 +176,6 @@ const app = (props) => {
 	const solveBoardHandler = () => {
 		setIsSolvingBoard(true);
 		SolveBoard(initialParsedBoardState).then((result) => {
-			//debugger;
 			const timerSolverState = result.abort
 				? { status: STATUS.UNKNOWN }
 				: { status: STATUS.TIMER, timeElapsed: result.timer.toFixed(2) };

@@ -2,8 +2,6 @@ export const digits = '123456789';
 export const letters = 'ABCDEFGHI';
 export const rows = letters.split('');
 export const cols = digits.split('');
-export const validNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-export const validSectionRows = [1, 2, 3];
 
 export const rRows = [
 	['A', 'B', 'C'],
@@ -37,7 +35,7 @@ export const STRATEGIES = {
 // String used to clean the board.
 export const emptySudokuString = '.'.repeat(81);
 
-export const acceptedStringRegExp = /^(([1-9]|\.)+|\W+)$/g;
+export const validStringRegExp = /^(([1-9]|\.)+|\W+)$/g;
 
 // Default sudoku string (valid)
 export const initialSudokuString =
