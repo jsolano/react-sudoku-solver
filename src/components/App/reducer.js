@@ -4,15 +4,12 @@ import {
 	initialSudokuString,
 	emptySudokuString,
 } from '../../services/Solver/constants';
-
 import {
 	getBoardState,
 	getRandomPuzzle,
 	isSolved,
 } from '../../services/Solver/utils';
-
 import { parseGrid } from '../../services/Solver/solver';
-
 import { resetLog } from '../../services/Solver/logs';
 
 export const appReducer = (state, action) => {
@@ -95,7 +92,7 @@ export const appReducer = (state, action) => {
 				statusSolveBoard: STATUS.UNKNOWN,
 				abortSolveBoard: STATUS.UNKNOWN,
 				statusInitialBoard: STATUS.UNKNOWN,
-				timerSolveState: STATUS.UNKNOWN,
+				timerSolveBoard: STATUS.UNKNOWN,
 				timeElapsed: 0,
 				newBoardModalError: '',
 			};
