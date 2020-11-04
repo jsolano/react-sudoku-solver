@@ -8,6 +8,7 @@ import {
 	getBoardState,
 	getRandomPuzzle,
 	isSolved,
+	stringBoardValidation,
 } from '../../services/Solver/utils';
 import { parseGrid } from '../../services/Solver/solver';
 import { resetLog } from '../../services/Solver/logs';
@@ -76,15 +77,23 @@ export const appReducer = (state, action) => {
 			};
 		}
 		case ACTIONS.CHANGE: {
-			const newBoardValues = parseGrid(state.newBoardString);
-			return {
-				...reset(state),
-				statusInitialBoard: isSolved(newBoardValues) ? STATUS.SOLVE : '',
-				initialParsedBoard: newBoardValues,
-				initialBoard: getBoardState(newBoardValues),
-				currentBoardString: state.newBoardString,
-				newBoardString: '',
-			};
+			const isValidString = stringBoardValidation(state.newBoardString);
+			if (isValidString === true) {
+				const newBoardValues = parseGrid(state.newBoardString);
+				return {
+					...reset(state),
+					statusInitialBoard: isSolved(newBoardValues) ? STATUS.SOLVE : '',
+					initialParsedBoard: newBoardValues,
+					initialBoard: getBoardState(newBoardValues),
+					currentBoardString: state.newBoardString,
+					newBoardString: '',
+				};
+			} else {
+				return {
+					...state,
+					['modalError']: isValidString,
+				};
+			}
 		}
 		case ACTIONS.RANDOM: {
 			const randomPuzzle = getRandomPuzzle();

@@ -10,7 +10,6 @@ import NewBoardForm from '../../components/NewBoardForm/NewBoardForm';
 import StatusMessage from '../StatusMessage/StatusMessage';
 import { ACTIONS } from '../../services/Solver/constants';
 import solver from '../../services/Solver/solver';
-import { stringBoardValidation } from '../../services/Solver/utils';
 import { appReducer, initialState } from './reducer';
 import './style.css';
 
@@ -41,19 +40,6 @@ const app = (props) => {
 	useEffect(() => {
 		localStorage.setItem('data', JSON.stringify(state));
 	}, [state]);
-
-	const changeBoardHandler = () => {
-		const isValidString = stringBoardValidation(newBoardString);
-		if (isValidString === true) {
-			dispatch({ type: ACTIONS.CHANGE });
-		} else {
-			dispatch({
-				type: ACTIONS.SET,
-				field: 'modalError',
-				value: isValidString,
-			});
-		}
-	};
 
 	const solverHandler = () => {
 		dispatch({ type: ACTIONS.SOLVE });
@@ -147,7 +133,7 @@ const app = (props) => {
 							value: e.target.value,
 						})
 					}
-					clicked={changeBoardHandler}
+					clicked={() => dispatch({ type: ACTIONS.CHANGE })}
 					currentStringBoard={newBoardString}
 					error={modalError}
 					randomPuzzle={() => dispatch({ type: ACTIONS.RANDOM })}
