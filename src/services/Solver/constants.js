@@ -25,6 +25,21 @@ export const STATUS = {
 	SOLVE: 'solve',
 };
 
+export const ACTIONS = {
+	OPEN_LOAD: 'open load',
+	CLOSE_LOAD: 'close load',
+	USE_DEFAULT: 'use default',
+	MODAL_ERROR: 'modal error',
+	CHANGE: 'change',
+	RANDOM: 'random',
+	SUCCESS: 'success',
+	SOLVE: 'solve',
+	CLEAR: 'clear',
+	RESET: 'reset',
+	SET: 'set',
+	RELOAD: 'reload',
+};
+
 export const STRATEGIES = {
 	HIDDEN_SINGLE: 'Hidden Single in cell',
 	NAKED_SINGLE: 'Naked Single in cell',

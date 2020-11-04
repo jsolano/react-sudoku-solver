@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import logo from '../../assets/nextstack-logo.png';
 import me from '../../assets/jp.png';
 import Board from '../Board/Board';
@@ -9,209 +9,107 @@ import Modal from '../../components/Modal/Modal';
 import NewBoardForm from '../../components/NewBoardForm/NewBoardForm';
 import StatusMessage from '../StatusMessage/StatusMessage';
 
-import {
-	STATUS,
-	initialSudokuString,
-	validStringRegExp,
-	emptySudokuString,
-} from '../../services/Solver/constants';
+import { ACTIONS, validStringRegExp } from '../../services/Solver/constants';
 
-import SolveBoard, { parseGrid } from '../../services/Solver/solver';
-import { resetLog } from '../../services/Solver/logs';
-import {
-	getBoardState,
-	getRandomPuzzle,
-	isSolved,
-} from '../../services/Solver/utils';
+import SolveBoard from '../../services/Solver/solver';
 
 import './style.css';
 
+import { appReducer, initialState } from './reducer';
+
 const app = (props) => {
+	const [state, dispatch] = useReducer(appReducer, initialState);
+
+	const {
+		initialParsedBoard,
+		isSolvingBoard,
+		initialBoard,
+		solveBoardState,
+		solutionSteps,
+		newBoardString,
+		timerSolveBoard,
+		timeElapsed,
+		newBoard,
+		abortSolveBoard,
+		statusSolveBoard,
+		statusInitialBoard,
+		newBoardModalError,
+	} = state;
+
 	useEffect(() => {
-		//console.log('app component here load');
+		const raw = localStorage.getItem('data');
+		dispatch({ type: ACTIONS.RELOAD, payload: JSON.parse(raw) });
 	}, []);
 
-	// Board Data
-	const initialBoard = parseGrid(initialSudokuString);
-	const emptyBoard = parseGrid(emptySudokuString);
-
-	const [initialParsedBoardState, setInitialParsedBoardState] = useState(
-		parseGrid(initialSudokuString)
-	);
-
-	const [isSolvingBoard, setIsSolvingBoard] = React.useState(false);
-
-	const [initialBoardState, setInitialBoardState] = useState(
-		getBoardState(initialBoard, ' Initial ')
-	);
-
-	const [solveBoardState, setSolveBoardState] = useState(
-		getBoardState(emptyBoard, ' Empty ')
-	);
-
-	const [spinnerSolveState, setSpinnerSolveState] = useState({
-		status: 'show',
-		msg: 'Solving...',
-	});
-
-	const [solutionStepsState, setSolutionStepsState] = useState();
-
-	const [statusSolveBoardState, setStatusSolveState] = useState({
-		status: STATUS.UNKNOWN,
-	});
-
-	const [statusInitialBoardState, setStatusInitialBoardState] = useState({
-		status: STATUS.UNKNOWN,
-	});
-
-	const [newBoardStringState, setNewBoardStringState] = useState();
-
-	const [currentBoardStringState, setCurrentBoardStringState] = useState(
-		initialSudokuString
-	);
-
-	const [timerSolveBoardState, setTimerSolveState] = useState({
-		status: STATUS.UNKNOWN,
-		timeElapsed: 0,
-	});
-
-	const [newBoardState, setNewBoardState] = useState({ enterNewBoard: false });
-
-	const [abortSolveBoardState, setAbortSolveBoardState] = useState(false);
-
-	const [newBoardModalErrorState, setNewBoardModalErrorState] = useState();
+	useEffect(() => {
+		localStorage.setItem('data', JSON.stringify(state));
+	}, [state]);
 
 	const isStringBoardValid = (entryString) => {
 		if (!entryString) {
-			setNewBoardModalErrorState('empty-value');
+			dispatch({
+				type: ACTIONS.SET,
+				field: 'newBoardModalError',
+				value: 'empty-value',
+			});
 			return false;
 		}
 
 		if (!validStringRegExp.test(entryString)) {
-			setNewBoardModalErrorState('invalid-value');
+			dispatch({
+				type: ACTIONS.SET,
+				field: 'newBoardModalError',
+				value: 'invalid-value',
+			});
 			return false;
 		}
 
 		if (entryString.length !== 81) {
-			setNewBoardModalErrorState('invalid-length');
+			dispatch({
+				type: ACTIONS.SET,
+				field: 'newBoardModalError',
+				value: 'invalid-length',
+			});
 			return false;
 		}
 
 		return true;
 	};
 
-	const cleanUp = () => {
-		setSolutionStepsState(resetLog('solutionSteps'));
-		setSolveBoardState(getBoardState(emptyBoard, ' Empty '));
-		setNewBoardState({ enterNewBoard: false });
-		setAbortSolveBoardState({ status: STATUS.UNKNOWN });
-		setStatusSolveState({ status: STATUS.UNKNOWN });
-		setStatusInitialBoardState({ status: STATUS.UNKNOWN });
-		setTimerSolveState({ status: STATUS.UNKNOWN, timeElapsed: 0 });
-		setNewBoardModalErrorState('');
-	};
-
 	const onUseDefaultBoardHandler = () => {
-		cleanUp();
-
-		//Initial UI Board
-		setInitialParsedBoardState(parseGrid(initialSudokuString));
-		setInitialBoardState(getBoardState(initialBoard), ' Default ');
-		setCurrentBoardStringState(initialSudokuString);
+		dispatch({ type: ACTIONS.RESET });
+		dispatch({ type: ACTIONS.USE_DEFAULT });
 	};
 
 	const onClearGameHandler = () => {
-		cleanUp();
-
-		setInitialParsedBoardState(parseGrid(currentBoardStringState));
-		setInitialBoardState(
-			getBoardState(parseGrid(currentBoardStringState)),
-			' Default '
-		);
+		dispatch({ type: ACTIONS.RESET });
+		dispatch({ type: ACTIONS.CLEAR });
 	};
 
 	const changeInitialBoardHandler = () => {
-		if (isStringBoardValid(newBoardStringState)) {
-			cleanUp();
-
-			// Change Initial board
-			const newBoardValues = parseGrid(newBoardStringState);
-			if (isSolved(newBoardValues)) {
-				setStatusInitialBoardState({ status: STATUS.SOLVE });
-			}
-			setInitialParsedBoardState(newBoardValues);
-			setInitialBoardState(getBoardState(newBoardValues, ' New Board '));
-
-			setCurrentBoardStringState(newBoardStringState);
-			setNewBoardStringState('');
-			console.log(' Its time to change initial board!');
-		} else {
-			console.log(' newBoardStringState is Empty!');
+		if (isStringBoardValid(state.newBoardString)) {
+			dispatch({ type: ACTIONS.RESET });
+			dispatch({ type: ACTIONS.CHANGE });
 		}
-	};
-
-	const onLoadNewBoardHandler = () => {
-		setNewBoardModalErrorState('');
-		setNewBoardStringState('');
-		setNewBoardState({ enterNewBoard: true });
 	};
 
 	const randomPuzzleHandler = () => {
-		const randomPuzzle = getRandomPuzzle();
-
-		cleanUp();
-
-		// Change Initial board
-		const newBoardValues = parseGrid(randomPuzzle);
-		if (isSolved(newBoardValues)) {
-			setStatusInitialBoardState({ status: STATUS.SOLVE });
-		}
-		setInitialParsedBoardState(newBoardValues);
-		setInitialBoardState(getBoardState(newBoardValues, ' New Board '));
-
-		setCurrentBoardStringState(randomPuzzle);
-		setNewBoardStringState('');
+		dispatch({ type: ACTIONS.RESET });
+		dispatch({ type: ACTIONS.RANDOM });
 	};
 
-	const solveBoardHandler = () => {
-		setIsSolvingBoard(true);
-		SolveBoard(initialParsedBoardState).then((result) => {
-			const timerSolverState = result.abort
-				? { status: STATUS.UNKNOWN }
-				: { status: STATUS.TIMER, timeElapsed: result.timer.toFixed(2) };
+	const solveBoardHandler = (e) => {
+		e.preventDefault();
 
-			setStatusSolveState({ status: result.status });
-			setStatusInitialBoardState({ status: STATUS.UNKNOWN });
-			setAbortSolveBoardState({
-				status: result.abort ? STATUS.ABORT : STATUS.UNKNOWN,
-			});
-			setTimerSolveState(timerSolverState);
+		dispatch({ type: ACTIONS.SOLVE });
 
-			setSolveBoardState(getBoardState(result.board, ' Solved '));
-			setSolutionStepsState(result.solutionSteps);
-
-			// Keep the same board
-			setInitialParsedBoardState(parseGrid(currentBoardStringState));
-			setInitialBoardState(
-				getBoardState(parseGrid(currentBoardStringState), ' Same Board ')
-			);
-
-			setIsSolvingBoard(false);
+		SolveBoard(initialParsedBoard).then((result) => {
+			dispatch({ type: ACTIONS.SUCCESS, result: result });
 		});
 	};
 
 	const onLearnClick = () => {
 		console.log('onLearnClick  clicked!');
-	};
-
-	const closeModalHandler = () => {
-		setNewBoardState({ enterNewBoard: false });
-		setNewBoardStringState('');
-		setNewBoardModalErrorState('');
-	};
-
-	const newInputBoardHandler = (event) => {
-		setNewBoardStringState(event.target.value);
 	};
 
 	return (
@@ -228,14 +126,10 @@ const app = (props) => {
 					<Circle classes="circle center-me" label="1" />
 					<Button
 						classes="btn marginTop15"
-						click={onLoadNewBoardHandler}
+						click={() => dispatch({ type: ACTIONS.OPEN_LOAD })}
 						label="Load New Board"
 					/>
-					<Board
-						classes="game-board"
-						board={initialBoardState}
-						name="initial"
-					/>
+					<Board classes="game-board" board={initialBoard} name="initial" />
 					<div className="buttons-row">
 						<Button
 							classes="btn btn-small"
@@ -245,7 +139,7 @@ const app = (props) => {
 					</div>
 					<StatusMessage
 						classes="App-message-row"
-						status={statusInitialBoardState.status}
+						status={statusInitialBoard}
 					/>
 				</div>
 
@@ -270,17 +164,11 @@ const app = (props) => {
 					</div>
 					<StatusMessage
 						classes="App-message-row"
-						status={timerSolveBoardState.status}
-						timeElapsed={timerSolveBoardState.timeElapsed}
+						status={timerSolveBoard}
+						timeElapsed={timeElapsed}
 					/>
-					<StatusMessage
-						classes="App-message-row"
-						status={statusSolveBoardState.status}
-					/>
-					<StatusMessage
-						classes="App-message-row"
-						status={abortSolveBoardState.status}
-					/>
+					<StatusMessage classes="App-message-row" status={statusSolveBoard} />
+					<StatusMessage classes="App-message-row" status={abortSolveBoard} />
 				</div>
 
 				<div className="App-game-panel">
@@ -288,16 +176,25 @@ const app = (props) => {
 					<div className="buttons-row">
 						<Button classes="btn" click={onLearnClick} label="Learn" />
 					</div>
-					<StepsLog classes="steps-log" stepsLog={solutionStepsState} />
+					<StepsLog classes="steps-log" stepsLog={solutionSteps} />
 				</div>
 			</div>
-			<Modal show={newBoardState.enterNewBoard} modalClosed={closeModalHandler}>
+			<Modal
+				show={newBoard}
+				modalClosed={() => dispatch({ type: ACTIONS.CLOSE_LOAD })}
+			>
 				<NewBoardForm
-					modalClosed={closeModalHandler}
-					changed={newInputBoardHandler}
+					modalClosed={() => dispatch({ type: ACTIONS.CLOSE_LOAD })}
+					changed={(e) =>
+						dispatch({
+							type: ACTIONS.SET,
+							field: 'newBoardString',
+							value: e.target.value,
+						})
+					}
 					clicked={changeInitialBoardHandler}
-					currentStringBoard={newBoardStringState}
-					error={newBoardModalErrorState}
+					currentStringBoard={newBoardString}
+					error={newBoardModalError}
 					randomPuzzle={randomPuzzleHandler}
 				/>
 			</Modal>
