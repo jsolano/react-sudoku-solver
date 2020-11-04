@@ -42,20 +42,9 @@ const app = (props) => {
 		localStorage.setItem('data', JSON.stringify(state));
 	}, [state]);
 
-	const onUseDefaultBoardHandler = () => {
-		dispatch({ type: ACTIONS.RESET });
-		dispatch({ type: ACTIONS.USE_DEFAULT });
-	};
-
-	const onClearBoardHandler = () => {
-		dispatch({ type: ACTIONS.RESET });
-		dispatch({ type: ACTIONS.CLEAR });
-	};
-
 	const changeBoardHandler = () => {
 		const isValidString = stringBoardValidation(newBoardString);
 		if (isValidString === true) {
-			dispatch({ type: ACTIONS.RESET });
 			dispatch({ type: ACTIONS.CHANGE });
 		} else {
 			dispatch({
@@ -66,14 +55,7 @@ const app = (props) => {
 		}
 	};
 
-	const randomPuzzleHandler = () => {
-		dispatch({ type: ACTIONS.RESET });
-		dispatch({ type: ACTIONS.RANDOM });
-	};
-
-	const solverHandler = (e) => {
-		e.preventDefault();
-
+	const solverHandler = () => {
 		dispatch({ type: ACTIONS.SOLVE });
 
 		solver(initialParsedBoard).then((result) => {
@@ -106,7 +88,7 @@ const app = (props) => {
 					<div className="buttons-row">
 						<Button
 							classes="btn btn-small"
-							click={onUseDefaultBoardHandler}
+							click={() => dispatch({ type: ACTIONS.USE_DEFAULT })}
 							label="Use Default Board"
 						/>
 					</div>
@@ -131,7 +113,7 @@ const app = (props) => {
 					<div className="buttons-row">
 						<Button
 							classes="btn btn-small marginLeft10"
-							click={onClearBoardHandler}
+							click={() => dispatch({ type: ACTIONS.CLEAR })}
 							label="Clear"
 						/>
 					</div>
@@ -168,7 +150,7 @@ const app = (props) => {
 					clicked={changeBoardHandler}
 					currentStringBoard={newBoardString}
 					error={modalError}
-					randomPuzzle={randomPuzzleHandler}
+					randomPuzzle={() => dispatch({ type: ACTIONS.RANDOM })}
 				/>
 			</Modal>
 		</div>
