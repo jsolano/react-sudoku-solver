@@ -26,6 +26,11 @@ export const STATUS = {
 	TIMER: 'timer',
 	SOLVE: 'solve',
 };
+export const ERRORS = {
+	EMPTY_VALUE: 'empty-value',
+	INVALID_VALUE: 'invalid-value',
+	INVALID_LENGTH: 'invalid-length',
+};
 
 export const ACTIONS = {
 	OPEN_LOAD: 'open load',

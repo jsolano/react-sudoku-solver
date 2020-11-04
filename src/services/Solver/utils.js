@@ -1,5 +1,15 @@
 import { addSolutionStepsLog } from './logs';
-import { digits, rows, cols, rRows, cCols, STRATEGIES } from './constants';
+import {
+	digits,
+	rows,
+	cols,
+	rRows,
+	cCols,
+	STRATEGIES,
+	ERRORS,
+	STRING_BOARD_LENGTH,
+	validStringRegExp,
+} from './constants';
 import { puzzles } from '../Solver/tests/data';
 
 // Cross product of elements in A and elements in B.
@@ -297,3 +307,19 @@ export const getPeers = (
 	getOuterPeers(unit, unitRows, values),
 	getOuterPeers(unit, unitCols, values),
 ];
+
+export const stringBoardValidation = (entryString) => {
+	if (!entryString) {
+		return ERRORS.EMPTY_VALUE;
+	}
+
+	if (!validStringRegExp.test(entryString)) {
+		return ERRORS.INVALID_VALUE;
+	}
+
+	if (entryString.length !== STRING_BOARD_LENGTH) {
+		return ERRORS.INVALID_LENGTH;
+	}
+
+	return true;
+};

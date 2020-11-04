@@ -8,12 +8,9 @@ import StepsLog from '../StepsLog/StepLogs';
 import Modal from '../../components/Modal/Modal';
 import NewBoardForm from '../../components/NewBoardForm/NewBoardForm';
 import StatusMessage from '../StatusMessage/StatusMessage';
-import {
-	ACTIONS,
-	STRING_BOARD_LENGTH,
-	validStringRegExp,
-} from '../../services/Solver/constants';
+import { ACTIONS } from '../../services/Solver/constants';
 import solver from '../../services/Solver/solver';
+import { stringBoardValidation } from '../../services/Solver/utils';
 import { appReducer, initialState } from './reducer';
 import './style.css';
 
@@ -45,37 +42,6 @@ const app = (props) => {
 		localStorage.setItem('data', JSON.stringify(state));
 	}, [state]);
 
-	const isStringBoardValid = (entryString) => {
-		if (!entryString) {
-			dispatch({
-				type: ACTIONS.SET,
-				field: 'modalError',
-				value: 'empty-value',
-			});
-			return false;
-		}
-
-		if (!validStringRegExp.test(entryString)) {
-			dispatch({
-				type: ACTIONS.SET,
-				field: 'modalError',
-				value: 'invalid-value',
-			});
-			return false;
-		}
-
-		if (entryString.length !== STRING_BOARD_LENGTH) {
-			dispatch({
-				type: ACTIONS.SET,
-				field: 'modalError',
-				value: 'invalid-length',
-			});
-			return false;
-		}
-
-		return true;
-	};
-
 	const onUseDefaultBoardHandler = () => {
 		dispatch({ type: ACTIONS.RESET });
 		dispatch({ type: ACTIONS.USE_DEFAULT });
@@ -87,9 +53,16 @@ const app = (props) => {
 	};
 
 	const changeBoardHandler = () => {
-		if (isStringBoardValid(newBoardString)) {
+		const isValidString = stringBoardValidation(newBoardString);
+		if (isValidString === true) {
 			dispatch({ type: ACTIONS.RESET });
 			dispatch({ type: ACTIONS.CHANGE });
+		} else {
+			dispatch({
+				type: ACTIONS.SET,
+				field: 'modalError',
+				value: isValidString,
+			});
 		}
 	};
 
