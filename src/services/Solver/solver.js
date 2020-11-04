@@ -293,7 +293,7 @@ export const eliminatePeerValues = (peers, values, digit) =>
  *	@field completed = true | false;
  *	@field solutionSteps = array of solutionSteps
  */
-const solveBoard = async (values) => {
+const solver = async (values) => {
 	let loopCounter = 0;
 	const loopLimit = 5;
 	let isAborted,
@@ -361,8 +361,8 @@ const solveBoard = async (values) => {
 	} catch (error) {
 		return solveBoardResult;
 		showBoardStatus(values, ' Debugger ');
-		console.log('Error solveBoard ', error);
+		console.log('Error solver ', error);
 	}
 };
 
-export default solveBoard;
+export default solver;

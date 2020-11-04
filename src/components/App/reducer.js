@@ -26,7 +26,7 @@ export const appReducer = (state, action) => {
 		case ACTIONS.OPEN_LOAD: {
 			return {
 				...state,
-				newBoardModalError: '',
+				modalError: '',
 				newBoardString: '',
 				newBoard: true,
 			};
@@ -36,7 +36,7 @@ export const appReducer = (state, action) => {
 				...state,
 				newBoard: false,
 				newBoardString: '',
-				newBoardModalError: '',
+				modalError: '',
 			};
 		}
 		case ACTIONS.SOLVE: {
@@ -54,7 +54,7 @@ export const appReducer = (state, action) => {
 				abortSolveBoard: action.result.abort ? STATUS.ABORT : STATUS.UNKNOWN,
 				timerSolveBoard: action.result.abort ? STATUS.ABORT : STATUS.TIMER,
 				timeElapsed: action.result.timer.toFixed(2),
-				solveBoardState: getBoardState(action.result.board),
+				solveBoard: getBoardState(action.result.board),
 				solutionSteps: action.result.solutionSteps,
 				initialParsedBoard: parseGrid(state.currentBoardString),
 				initialBoard: getBoardState(parseGrid(state.currentBoardString)),
@@ -87,14 +87,14 @@ export const appReducer = (state, action) => {
 			return {
 				...state,
 				solutionSteps: resetLog('solutionSteps'),
-				solveBoardState: getBoardState(parseGrid(emptySudokuString)),
+				solveBoard: getBoardState(parseGrid(emptySudokuString)),
 				newBoard: false,
 				statusSolveBoard: STATUS.UNKNOWN,
 				abortSolveBoard: STATUS.UNKNOWN,
 				statusInitialBoard: STATUS.UNKNOWN,
 				timerSolveBoard: STATUS.UNKNOWN,
 				timeElapsed: 0,
-				newBoardModalError: '',
+				modalError: '',
 			};
 		}
 		case ACTIONS.CLEAR: {
@@ -120,12 +120,14 @@ export const appReducer = (state, action) => {
 	}
 };
 
+const parsedInitialBoard = parseGrid(initialSudokuString);
+
 export const initialState = {
 	currentBoardString: initialSudokuString,
-	initialParsedBoard: parseGrid(initialSudokuString),
+	initialParsedBoard: parsedInitialBoard,
 	isSolvingBoard: false,
-	initialBoard: getBoardState(parseGrid(initialSudokuString)),
-	solveBoardState: getBoardState(parseGrid(emptySudokuString)),
+	initialBoard: getBoardState(parsedInitialBoard),
+	solveBoard: getBoardState(parseGrid(emptySudokuString)),
 	solutionSteps: '',
 	statusSolveBoard: STATUS.UNKNOWN,
 	statusInitialBoard: STATUS.UNKNOWN,
@@ -134,5 +136,5 @@ export const initialState = {
 	timeElapsed: 0,
 	newBoard: false,
 	abortSolveBoard: false,
-	newBoardModalError: '',
+	modalError: '',
 };

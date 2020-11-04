@@ -15,6 +15,8 @@ export const cCols = [
 	['7', '8', '9'],
 ];
 
+export const STRING_BOARD_LENGTH = 81;
+
 export const STATUS = {
 	ABORT: 'abort',
 	VALID: 'valid',
@@ -48,7 +50,7 @@ export const STRATEGIES = {
 };
 
 // String used to clean the board.
-export const emptySudokuString = '.'.repeat(81);
+export const emptySudokuString = '.'.repeat(STRING_BOARD_LENGTH);
 
 export const validStringRegExp = /^(([1-9]|\.)+|\W+)$/g;
 

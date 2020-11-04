@@ -8,14 +8,14 @@ import StepsLog from '../StepsLog/StepLogs';
 import Modal from '../../components/Modal/Modal';
 import NewBoardForm from '../../components/NewBoardForm/NewBoardForm';
 import StatusMessage from '../StatusMessage/StatusMessage';
-
-import { ACTIONS, validStringRegExp } from '../../services/Solver/constants';
-
-import SolveBoard from '../../services/Solver/solver';
-
-import './style.css';
-
+import {
+	ACTIONS,
+	STRING_BOARD_LENGTH,
+	validStringRegExp,
+} from '../../services/Solver/constants';
+import solver from '../../services/Solver/solver';
 import { appReducer, initialState } from './reducer';
+import './style.css';
 
 const app = (props) => {
 	const [state, dispatch] = useReducer(appReducer, initialState);
@@ -24,7 +24,7 @@ const app = (props) => {
 		initialParsedBoard,
 		isSolvingBoard,
 		initialBoard,
-		solveBoardState,
+		solveBoard,
 		solutionSteps,
 		newBoardString,
 		timerSolveBoard,
@@ -33,7 +33,7 @@ const app = (props) => {
 		abortSolveBoard,
 		statusSolveBoard,
 		statusInitialBoard,
-		newBoardModalError,
+		modalError,
 	} = state;
 
 	useEffect(() => {
@@ -49,7 +49,7 @@ const app = (props) => {
 		if (!entryString) {
 			dispatch({
 				type: ACTIONS.SET,
-				field: 'newBoardModalError',
+				field: 'modalError',
 				value: 'empty-value',
 			});
 			return false;
@@ -58,16 +58,16 @@ const app = (props) => {
 		if (!validStringRegExp.test(entryString)) {
 			dispatch({
 				type: ACTIONS.SET,
-				field: 'newBoardModalError',
+				field: 'modalError',
 				value: 'invalid-value',
 			});
 			return false;
 		}
 
-		if (entryString.length !== 81) {
+		if (entryString.length !== STRING_BOARD_LENGTH) {
 			dispatch({
 				type: ACTIONS.SET,
-				field: 'newBoardModalError',
+				field: 'modalError',
 				value: 'invalid-length',
 			});
 			return false;
@@ -81,13 +81,13 @@ const app = (props) => {
 		dispatch({ type: ACTIONS.USE_DEFAULT });
 	};
 
-	const onClearGameHandler = () => {
+	const onClearBoardHandler = () => {
 		dispatch({ type: ACTIONS.RESET });
 		dispatch({ type: ACTIONS.CLEAR });
 	};
 
-	const changeInitialBoardHandler = () => {
-		if (isStringBoardValid(state.newBoardString)) {
+	const changeBoardHandler = () => {
+		if (isStringBoardValid(newBoardString)) {
 			dispatch({ type: ACTIONS.RESET });
 			dispatch({ type: ACTIONS.CHANGE });
 		}
@@ -98,12 +98,12 @@ const app = (props) => {
 		dispatch({ type: ACTIONS.RANDOM });
 	};
 
-	const solveBoardHandler = (e) => {
+	const solverHandler = (e) => {
 		e.preventDefault();
 
 		dispatch({ type: ACTIONS.SOLVE });
 
-		SolveBoard(initialParsedBoard).then((result) => {
+		solver(initialParsedBoard).then((result) => {
 			dispatch({ type: ACTIONS.SUCCESS, result: result });
 		});
 	};
@@ -149,16 +149,16 @@ const app = (props) => {
 						<Button
 							classes="btn marginTop15"
 							isSpinning={isSolvingBoard}
-							click={solveBoardHandler}
+							click={solverHandler}
 							label="Solve"
 						/>
 					</div>
 
-					<Board classes="game-board" board={solveBoardState} name="solver" />
+					<Board classes="game-board" board={solveBoard} name="solver" />
 					<div className="buttons-row">
 						<Button
 							classes="btn btn-small marginLeft10"
-							click={onClearGameHandler}
+							click={onClearBoardHandler}
 							label="Clear"
 						/>
 					</div>
@@ -192,9 +192,9 @@ const app = (props) => {
 							value: e.target.value,
 						})
 					}
-					clicked={changeInitialBoardHandler}
+					clicked={changeBoardHandler}
 					currentStringBoard={newBoardString}
-					error={newBoardModalError}
+					error={modalError}
 					randomPuzzle={randomPuzzleHandler}
 				/>
 			</Modal>
