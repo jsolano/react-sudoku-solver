@@ -18,9 +18,9 @@ const app = (props) => {
 
 	const {
 		isSolving,
+		initialBoardParsed,
 		initialBoardState,
 		initialBoardStatus,
-		initialBoardParsed,
 		solveBoardState,
 		solveBoardStatus,
 		solveBoardAbort,
