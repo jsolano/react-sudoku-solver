@@ -28,6 +28,18 @@ const reset = (state) => {
 	};
 };
 
+const change = (state, newBoardString) => {
+	const newBoardParsed = parseGrid(newBoardString);
+	return {
+		...reset(state),
+		initialBoardStatus: isSolved(newBoardParsed) ? STATUS.SOLVE : '',
+		initialBoardParsed: newBoardParsed,
+		initialBoardState: getBoardState(newBoardParsed),
+		currentBoardString: newBoardString,
+		newBoardString: '',
+	};
+};
+
 export const appReducer = (state, action) => {
 	switch (action.type) {
 		case ACTIONS.RELOAD: {
@@ -79,15 +91,7 @@ export const appReducer = (state, action) => {
 		case ACTIONS.CHANGE: {
 			const isValidString = stringBoardValidation(state.newBoardString);
 			if (isValidString === true) {
-				const newBoardValues = parseGrid(state.newBoardString);
-				return {
-					...reset(state),
-					initialBoardStatus: isSolved(newBoardValues) ? STATUS.SOLVE : '',
-					initialBoardParsed: newBoardValues,
-					initialBoardState: getBoardState(newBoardValues),
-					currentBoardString: state.newBoardString,
-					newBoardString: '',
-				};
+				return change(state, state.newBoardString);
 			} else {
 				return {
 					...state,
@@ -97,15 +101,7 @@ export const appReducer = (state, action) => {
 		}
 		case ACTIONS.RANDOM: {
 			const randomPuzzle = getRandomPuzzle();
-			const newBoardValues = parseGrid(randomPuzzle);
-			return {
-				...reset(state),
-				initialBoardStatus: isSolved(newBoardValues) ? STATUS.SOLVE : '',
-				initialBoardParsed: newBoardValues,
-				initialBoardState: getBoardState(newBoardValues),
-				currentBoardString: randomPuzzle,
-				newBoardString: '',
-			};
+			return change(state, randomPuzzle);
 		}
 		case ACTIONS.CLEAR: {
 			const currentBoardParsed = parseGrid(state.currentBoardString);
