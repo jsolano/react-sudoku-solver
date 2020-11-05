@@ -100,8 +100,8 @@ export const appReducer = (state, action) => {
 			}
 		}
 		case ACTIONS.RANDOM: {
-			const randomPuzzle = getRandomPuzzle();
-			return change(state, randomPuzzle);
+			const randomPuzzleString = getRandomPuzzle();
+			return change(state, randomPuzzleString);
 		}
 		case ACTIONS.CLEAR: {
 			const currentBoardParsed = parseGrid(state.currentBoardString);
