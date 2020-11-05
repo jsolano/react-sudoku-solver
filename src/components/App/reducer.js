@@ -17,11 +17,11 @@ const reset = (state) => {
 	return {
 		...state,
 		solutionSteps: resetLog('solutionSteps'),
-		solveBoard: getBoardState(parseGrid(emptySudokuString)),
-		newBoard: false,
-		statusSolveBoard: STATUS.UNKNOWN,
-		abortSolveBoard: STATUS.UNKNOWN,
-		statusInitialBoard: STATUS.UNKNOWN,
+		solveBoardState: getBoardState(parseGrid(emptySudokuString)),
+		openModal: false,
+		solveBoardStatus: STATUS.UNKNOWN,
+		solveBoardAbort: STATUS.UNKNOWN,
+		initialBoardStatus: STATUS.UNKNOWN,
 		timerSolveBoard: STATUS.UNKNOWN,
 		timeElapsed: 0,
 		modalError: '',
@@ -44,13 +44,13 @@ export const appReducer = (state, action) => {
 				...state,
 				modalError: '',
 				newBoardString: '',
-				newBoard: true,
+				openModal: true,
 			};
 		}
 		case ACTIONS.CLOSE_LOAD: {
 			return {
 				...state,
-				newBoard: false,
+				openModal: false,
 				newBoardString: '',
 				modalError: '',
 			};
@@ -58,22 +58,22 @@ export const appReducer = (state, action) => {
 		case ACTIONS.SOLVE: {
 			return {
 				...state,
-				isSolvingBoard: true,
+				isSolving: true,
 			};
 		}
 		case ACTIONS.SUCCESS: {
 			return {
 				...state,
-				isSolvingBoard: false,
-				statusSolveBoard: action.result.status,
-				statusInitialBoard: STATUS.UNKNOWN,
-				abortSolveBoard: action.result.abort ? STATUS.ABORT : STATUS.UNKNOWN,
+				isSolving: false,
+				solveBoardStatus: action.result.status,
+				initialBoardStatus: STATUS.UNKNOWN,
+				solveBoardAbort: action.result.abort ? STATUS.ABORT : STATUS.UNKNOWN,
 				timerSolveBoard: action.result.abort ? STATUS.ABORT : STATUS.TIMER,
 				timeElapsed: action.result.timer.toFixed(2),
-				solveBoard: getBoardState(action.result.board),
+				solveBoardState: getBoardState(action.result.board),
 				solutionSteps: action.result.solutionSteps,
-				initialParsedBoard: parseGrid(state.currentBoardString),
-				initialBoard: getBoardState(parseGrid(state.currentBoardString)),
+				initialBoardParsed: parseGrid(state.currentBoardString),
+				initialBoardState: getBoardState(parseGrid(state.currentBoardString)),
 			};
 		}
 		case ACTIONS.CHANGE: {
@@ -82,9 +82,9 @@ export const appReducer = (state, action) => {
 				const newBoardValues = parseGrid(state.newBoardString);
 				return {
 					...reset(state),
-					statusInitialBoard: isSolved(newBoardValues) ? STATUS.SOLVE : '',
-					initialParsedBoard: newBoardValues,
-					initialBoard: getBoardState(newBoardValues),
+					initialBoardStatus: isSolved(newBoardValues) ? STATUS.SOLVE : '',
+					initialBoardParsed: newBoardValues,
+					initialBoardState: getBoardState(newBoardValues),
 					currentBoardString: state.newBoardString,
 					newBoardString: '',
 				};
@@ -100,27 +100,27 @@ export const appReducer = (state, action) => {
 			const newBoardValues = parseGrid(randomPuzzle);
 			return {
 				...reset(state),
-				statusInitialBoard: isSolved(newBoardValues) ? STATUS.SOLVE : '',
-				initialParsedBoard: newBoardValues,
-				initialBoard: getBoardState(newBoardValues),
+				initialBoardStatus: isSolved(newBoardValues) ? STATUS.SOLVE : '',
+				initialBoardParsed: newBoardValues,
+				initialBoardState: getBoardState(newBoardValues),
 				currentBoardString: randomPuzzle,
 				newBoardString: '',
 			};
 		}
 		case ACTIONS.CLEAR: {
-			const currentBoard = parseGrid(state.currentBoardString);
+			const currentBoardParsed = parseGrid(state.currentBoardString);
 			return {
 				...reset(state),
-				initialParsedBoard: currentBoard,
-				initialBoard: getBoardState(currentBoard),
+				initialBoardParsed: currentBoardParsed,
+				initialBoardState: getBoardState(currentBoardParsed),
 			};
 		}
 		case ACTIONS.USE_DEFAULT: {
 			const defaultBoard = parseGrid(initialSudokuString);
 			return {
 				...reset(state),
-				initialParsedBoard: defaultBoard,
-				initialBoard: getBoardState(defaultBoard),
+				initialBoardParsed: defaultBoard,
+				initialBoardState: getBoardState(defaultBoard),
 				currentBoardString: initialSudokuString,
 			};
 		}
@@ -134,17 +134,17 @@ const parsedInitialBoard = parseGrid(initialSudokuString);
 
 export const initialState = {
 	currentBoardString: initialSudokuString,
-	initialParsedBoard: parsedInitialBoard,
-	isSolvingBoard: false,
-	initialBoard: getBoardState(parsedInitialBoard),
-	solveBoard: getBoardState(parseGrid(emptySudokuString)),
+	initialBoardState: getBoardState(parsedInitialBoard),
+	initialBoardStatus: STATUS.UNKNOWN,
+	initialBoardParsed: parsedInitialBoard,
+	solveBoardState: getBoardState(parseGrid(emptySudokuString)),
+	solveBoardStatus: STATUS.UNKNOWN,
+	solveBoardAbort: false,
+	isSolving: false,
 	solutionSteps: '',
-	statusSolveBoard: STATUS.UNKNOWN,
-	statusInitialBoard: STATUS.UNKNOWN,
 	newBoardString: '',
 	timerSolveBoard: STATUS.UNKNOWN,
 	timeElapsed: 0,
-	newBoard: false,
-	abortSolveBoard: false,
+	openModal: false,
 	modalError: '',
 };

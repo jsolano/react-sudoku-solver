@@ -17,18 +17,18 @@ const app = (props) => {
 	const [state, dispatch] = useReducer(appReducer, initialState);
 
 	const {
-		initialParsedBoard,
-		isSolvingBoard,
-		initialBoard,
-		solveBoard,
+		isSolving,
+		initialBoardState,
+		initialBoardStatus,
+		initialBoardParsed,
+		solveBoardState,
+		solveBoardStatus,
+		solveBoardAbort,
 		solutionSteps,
 		newBoardString,
 		timerSolveBoard,
 		timeElapsed,
-		newBoard,
-		abortSolveBoard,
-		statusSolveBoard,
-		statusInitialBoard,
+		openModal,
 		modalError,
 	} = state;
 
@@ -44,7 +44,7 @@ const app = (props) => {
 	const solverHandler = () => {
 		dispatch({ type: ACTIONS.SOLVE });
 
-		solver(initialParsedBoard).then((result) => {
+		solver(initialBoardParsed).then((result) => {
 			dispatch({ type: ACTIONS.SUCCESS, result: result });
 		});
 	};
@@ -70,7 +70,11 @@ const app = (props) => {
 						click={() => dispatch({ type: ACTIONS.OPEN_LOAD })}
 						label="Load New Board"
 					/>
-					<Board classes="game-board" board={initialBoard} name="initial" />
+					<Board
+						classes="game-board"
+						board={initialBoardState}
+						name="initial"
+					/>
 					<div className="buttons-row">
 						<Button
 							classes="btn btn-small"
@@ -80,7 +84,7 @@ const app = (props) => {
 					</div>
 					<StatusMessage
 						classes="App-message-row"
-						status={statusInitialBoard}
+						status={initialBoardStatus}
 					/>
 				</div>
 
@@ -89,13 +93,13 @@ const app = (props) => {
 					<div>
 						<Button
 							classes="btn marginTop15"
-							isSpinning={isSolvingBoard}
+							isSpinning={isSolving}
 							click={solverHandler}
 							label="Solve"
 						/>
 					</div>
 
-					<Board classes="game-board" board={solveBoard} name="solver" />
+					<Board classes="game-board" board={solveBoardState} name="solver" />
 					<div className="buttons-row">
 						<Button
 							classes="btn btn-small marginLeft10"
@@ -108,8 +112,8 @@ const app = (props) => {
 						status={timerSolveBoard}
 						timeElapsed={timeElapsed}
 					/>
-					<StatusMessage classes="App-message-row" status={statusSolveBoard} />
-					<StatusMessage classes="App-message-row" status={abortSolveBoard} />
+					<StatusMessage classes="App-message-row" status={solveBoardStatus} />
+					<StatusMessage classes="App-message-row" status={solveBoardAbort} />
 				</div>
 
 				<div className="App-game-panel">
@@ -121,7 +125,7 @@ const app = (props) => {
 				</div>
 			</div>
 			<Modal
-				show={newBoard}
+				show={openModal}
 				modalClosed={() => dispatch({ type: ACTIONS.CLOSE_LOAD })}
 			>
 				<NewBoardForm
