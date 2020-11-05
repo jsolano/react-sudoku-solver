@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Spinner from '../Spinner/Spinner';
 import { useSpring, animated } from 'react-spring';
 import './style.css';
@@ -25,9 +25,9 @@ const button = (props) => {
 		}
 	}, [props.isSpinning, showSpinner]);
 
-	const [width, setWidth] = React.useState(0);
-	const [height, setHeight] = React.useState(0);
-	const ref = React.useRef(null);
+	const [width, setWidth] = useState(0);
+	const [height, setHeight] = useState(0);
+	const ref = useRef(null);
 
 	useEffect(() => {
 		if (ref.current && ref.current.getBoundingClientRect().width) {
