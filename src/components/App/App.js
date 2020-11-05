@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
-import logo from '../../assets/nextstack-logo.png';
+import logo from '../../assets/logo.png';
 import me from '../../assets/jp.png';
 import Board from '../Board/Board';
 import Button from '../Button/Button';
