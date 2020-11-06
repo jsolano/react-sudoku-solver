@@ -1,15 +1,15 @@
 {
-  "main.css": "/react-sudoku-solver/static/css/main.baa8f46f.chunk.css",
-  "main.js": "/react-sudoku-solver/static/js/main.8fefd880.chunk.js",
-  "main.js.map": "/react-sudoku-solver/static/js/main.8fefd880.chunk.js.map",
-  "static/js/1.995f635f.chunk.js": "/react-sudoku-solver/static/js/1.995f635f.chunk.js",
-  "static/js/1.995f635f.chunk.js.map": "/react-sudoku-solver/static/js/1.995f635f.chunk.js.map",
+  "main.css": "/react-sudoku-solver/static/css/main.1c8cfc01.chunk.css",
+  "main.js": "/react-sudoku-solver/static/js/main.ae5e6a27.chunk.js",
+  "main.js.map": "/react-sudoku-solver/static/js/main.ae5e6a27.chunk.js.map",
+  "static/js/1.9480cde9.chunk.js": "/react-sudoku-solver/static/js/1.9480cde9.chunk.js",
+  "static/js/1.9480cde9.chunk.js.map": "/react-sudoku-solver/static/js/1.9480cde9.chunk.js.map",
   "runtime~main.js": "/react-sudoku-solver/static/js/runtime~main.10f464cc.js",
   "runtime~main.js.map": "/react-sudoku-solver/static/js/runtime~main.10f464cc.js.map",
-  "static/media/nextstack-logo.png": "/react-sudoku-solver/static/media/nextstack-logo.b093b40d.png",
+  "static/media/logo.png": "/react-sudoku-solver/static/media/logo.b093b40d.png",
   "static/media/jp.png": "/react-sudoku-solver/static/media/jp.900a0989.png",
-  "static/css/main.baa8f46f.chunk.css.map": "/react-sudoku-solver/static/css/main.baa8f46f.chunk.css.map",
+  "static/css/main.1c8cfc01.chunk.css.map": "/react-sudoku-solver/static/css/main.1c8cfc01.chunk.css.map",
   "index.html": "/react-sudoku-solver/index.html",
-  "precache-manifest.b0e5d40553b98b03e6661f198c8d4e08.js": "/react-sudoku-solver/precache-manifest.b0e5d40553b98b03e6661f198c8d4e08.js",
+  "precache-manifest.fbc326456a1a588accc468d0e2bf32e2.js": "/react-sudoku-solver/precache-manifest.fbc326456a1a588accc468d0e2bf32e2.js",
   "service-worker.js": "/react-sudoku-solver/service-worker.js"
 }
