@@ -97,9 +97,10 @@ export const appReducer = (state, action) => {
 			if (isValidString === true) {
 				return change(state, state.newBoardString);
 			} else {
+				const validationError = isValidString;
 				return {
 					...state,
-					['modalError']: isValidString,
+					['modalError']: validationError,
 				};
 			}
 		}
