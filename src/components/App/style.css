@@ -4,23 +4,10 @@
 		'Lucida Grande', sans-serif;
 }
 
-.App-logo {
-	height: 40px;
-	padding-left: 10px;
-}
-
-.App-author {
-	padding-right: 16px;
-}
-
 .App-status-message {
 	line-height: 1.5;
 	display: inline-block;
 	margin-left: 10px;
-}
-
-.App-author-image {
-	height: 45px;
 }
 
 .App-message-row {
@@ -45,33 +32,6 @@
 
 .App-icon .invalid {
 	width: 30px;
-}
-
-.App-header {
-	width: 100%;
-	max-width: 1504px;
-	margin-left: auto;
-	margin-right: auto;
-	padding-left: 16px;
-	padding-right: 16px;
-	box-sizing: border-box;
-	border-bottom: 1px solid rgba(198, 206, 217, 0.5);
-	display: flex;
-	align-items: center;
-}
-
-.App-title {
-	flex: 1;
-	font-size: 1.5em;
-	align-items: center;
-	padding-left: 50px;
-	padding-right: 50px;
-}
-
-@media (max-width: 800px) {
-	.App-title {
-		font-size: 1.1em;
-	}
 }
 
 .App-body {

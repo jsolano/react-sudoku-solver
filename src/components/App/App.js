@@ -1,15 +1,14 @@
 import React, { useEffect, useReducer } from 'react';
-import logo from '../../assets/logo.png';
-import me from '../../assets/jp.png';
 import Board from '../Board/Board';
 import Button from '../Button/Button';
 import Circle from '../Circle/Circle';
 import StepsLog from '../StepsLog/StepLogs';
 import Modal from '../../components/Modal/Modal';
+import Header from '../Header/header';
 import NewBoardForm from '../../components/NewBoardForm/NewBoardForm';
 import StatusMessage from '../StatusMessage/StatusMessage';
 import { ACTIONS } from '../../services/Solver/constants';
-import solver from '../../services/Solver/solver';
+import Solver from '../../services/Solver/solver';
 import { appReducer, initialState } from './reducer';
 import './style.css';
 
@@ -44,7 +43,7 @@ const app = (props) => {
 	const solverHandler = () => {
 		dispatch({ type: ACTIONS.SOLVE });
 
-		solver(initialBoardParsed).then((result) => {
+		Solver(initialBoardParsed).then((result) => {
 			dispatch({ type: ACTIONS.SUCCESS, result: result });
 		});
 	};
@@ -55,12 +54,7 @@ const app = (props) => {
 
 	return (
 		<div className="App">
-			<header className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-				<h1 className="App-title">React Sudoku Solver</h1>
-				<h3 className="App-author">J.P.</h3>
-				<img src={me} className="App-author-image" alt="logo" />
-			</header>
+			<Header />
 
 			<div className="App-body App-container">
 				<div className="App-game-panel">
