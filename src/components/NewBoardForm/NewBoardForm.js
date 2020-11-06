@@ -37,7 +37,7 @@ const newBoardForm = (props) => {
 					/>
 					<Button
 						classes="btn btn-small marginLeft10"
-						click={props.clicked}
+						click={props.click}
 						label="Ok"
 					/>
 				</div>

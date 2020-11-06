@@ -131,7 +131,7 @@ const app = (props) => {
 							value: e.target.value,
 						})
 					}
-					clicked={() => dispatch({ type: ACTIONS.CHANGE })}
+					click={() => dispatch({ type: ACTIONS.CHANGE })}
 					currentStringBoard={newBoardString}
 					error={modalError}
 					randomPuzzle={() => dispatch({ type: ACTIONS.RANDOM })}
