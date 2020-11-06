@@ -52,7 +52,7 @@ export const appReducer = (state, action) => {
 				[action.field]: action.value,
 			};
 		}
-		case ACTIONS.OPEN_LOAD: {
+		case ACTIONS.OPEN: {
 			return {
 				...state,
 				modalError: '',
@@ -60,7 +60,7 @@ export const appReducer = (state, action) => {
 				openModal: true,
 			};
 		}
-		case ACTIONS.CLOSE_LOAD: {
+		case ACTIONS.CLOSE: {
 			return {
 				...state,
 				openModal: false,
@@ -115,7 +115,7 @@ export const appReducer = (state, action) => {
 				initialBoardState: getBoardState(initialBoardParsed),
 			};
 		}
-		case ACTIONS.USE_DEFAULT: {
+		case ACTIONS.DEFAULT: {
 			const initialBoardParsed = parseGrid(initialSudokuString);
 			return {
 				...reset(state),

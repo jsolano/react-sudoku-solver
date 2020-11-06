@@ -33,9 +33,9 @@ export const ERRORS = {
 };
 
 export const ACTIONS = {
-	OPEN_LOAD: 'open load',
-	CLOSE_LOAD: 'close load',
-	USE_DEFAULT: 'use default',
+	OPEN: 'open load',
+	CLOSE: 'close load',
+	DEFAULT: 'use default',
 	MODAL_ERROR: 'modal error',
 	CHANGE: 'change',
 	RANDOM: 'random',

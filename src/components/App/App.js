@@ -61,7 +61,7 @@ const app = (props) => {
 					<Circle classes="circle center-me" label="1" />
 					<Button
 						classes="btn marginTop15"
-						click={() => dispatch({ type: ACTIONS.OPEN_LOAD })}
+						click={() => dispatch({ type: ACTIONS.OPEN })}
 						label="Load New Board"
 					/>
 					<Board
@@ -72,7 +72,7 @@ const app = (props) => {
 					<div className="buttons-row">
 						<Button
 							classes="btn btn-small"
-							click={() => dispatch({ type: ACTIONS.USE_DEFAULT })}
+							click={() => dispatch({ type: ACTIONS.DEFAULT })}
 							label="Use Default Board"
 						/>
 					</div>
@@ -120,10 +120,10 @@ const app = (props) => {
 			</div>
 			<Modal
 				show={openModal}
-				modalClosed={() => dispatch({ type: ACTIONS.CLOSE_LOAD })}
+				modalClosed={() => dispatch({ type: ACTIONS.CLOSE })}
 			>
 				<NewBoardForm
-					modalClosed={() => dispatch({ type: ACTIONS.CLOSE_LOAD })}
+					modalClosed={() => dispatch({ type: ACTIONS.CLOSE })}
 					changed={(e) =>
 						dispatch({
 							type: ACTIONS.SET,
