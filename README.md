@@ -70,7 +70,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Next Steps
 
-1. In the modal for Load a new Board, Add a button to select a random puzzle string.
+**DONE** In the modal for Load a new Board, Add a button to select a random puzzle string.
 
 Below you will find some information on how to perform common tasks.<br>
 
