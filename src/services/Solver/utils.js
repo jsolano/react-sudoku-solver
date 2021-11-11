@@ -181,9 +181,9 @@ export const display = (values) => {
 	for (const r in rows) {
 		for (const c in cols) {
 			board += center(values[rows[r] + cols[c]], width);
-			if (c == 2 || c == 5) board += '|';
+			if (c === 2 || c === 5) board += '|';
 		}
-		if (r == 2 || r == 5) board += line;
+		if (r === 2 || r === 5) board += line;
 		board += '\n';
 	}
 	board += '\n';

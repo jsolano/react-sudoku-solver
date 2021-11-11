@@ -100,7 +100,7 @@ export const appReducer = (state, action) => {
 				const validationError = isValidString;
 				return {
 					...state,
-					['modalError']: validationError,
+					'modalError': validationError,
 				};
 			}
 		}

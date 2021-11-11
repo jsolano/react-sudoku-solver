@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './style.css';
 import { ERRORS } from './../../../services/Solver/constants';
 import AlertTriangle from '../../Icons/AlertTriangle/AlertTriangle';

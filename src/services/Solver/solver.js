@@ -16,7 +16,6 @@ import {
 	getPairSquares,
 	unsolvedSquares,
 	canEliminate,
-	showBoardStatus,
 	isSolved,
 	display,
 	getSquareUnitRowCol,
@@ -173,7 +172,7 @@ export const parseGrid = (grid) => {
 
 const gridValues = (grid) => {
 	//Convert grid into a dict of {square: char} with '0' or '.' for empties.
-	const parseGrid = grid.replace(/[^0-9\.]/g, '');
+	const parseGrid = grid.replace(/[^0-9.]/g, '');
 	return dict(squares, parseGrid.split(''));
 };
 
@@ -359,9 +358,9 @@ const Solver = async (values) => {
 
 		return solveBoardResult;
 	} catch (error) {
-		return solveBoardResult;
-		showBoardStatus(values, ' Debugger ');
+		console.log(display(values));
 		console.log('Error solver ', error);
+		return solveBoardResult;
 	}
 };
 

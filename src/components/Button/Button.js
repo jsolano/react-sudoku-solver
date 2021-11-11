@@ -44,6 +44,7 @@ const button = (props) => {
 	return (
 		<a
 			ref={ref}
+			href="/#" 
 			style={
 				showSpinner
 					? {
